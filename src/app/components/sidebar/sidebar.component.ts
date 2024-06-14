@@ -9,7 +9,7 @@ import { CommonModule, NgStyle } from '@angular/common';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  array_side_bar :Array <string> =['SIDE BAR' , 'STEP 1' , 'STEP 2' , 'STEP 3'];  
+  array_side_bar :Array <string> =['STEP 1' , 'STEP 2' , 'STEP 3'];  
   click_side : boolean = false ; 
 
   side_bar()
