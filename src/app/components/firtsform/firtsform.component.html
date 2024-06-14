@@ -1,17 +1,26 @@
 <h1 id="title">Inserisci nome e nome organizzazione</h1>
-
-<form class="form" [formGroup]="form_nome_organizazzione" (submit)="Invio_dati()">
-  <div>
-    <mat-form-field class="input">
-      <mat-label>Nome</mat-label>
-      <input matInput formControlName="nome" />
-    </mat-form-field>
+<div id="form_sidebar">
+  <app-sidebar></app-sidebar>
+  <div id="contenitore_form">
+    <form
+      class="form"
+      [formGroup]="form_nome_organizazzione"
+      (submit)="Invio_dati()">
+      <div>
+        <mat-form-field class="input" class="form">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="form">
+          <mat-label>Prefisso Organizzazione</mat-label>
+          <input matInput formControlName="organizazzione" />
+        </mat-form-field>
+      </div>
+      <button type="submit" [disabled]="!form_nome_organizazzione.valid">
+        INVIA
+      </button>
+    </form>
   </div>
-  <div>
-    <mat-form-field>
-      <mat-label>Prefisso Organizzazione</mat-label>
-      <input matInput formControlName="organizazzione"/>
-    </mat-form-field>
-  </div>
-  <button type="submit" [disabled]="!form_nome_organizazzione.valid"> INVIA </button>
-</form>
+</div>

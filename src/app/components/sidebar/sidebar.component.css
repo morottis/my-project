@@ -1,0 +1,15 @@
+.side_bar{
+    display: inline-block;
+    padding: 50px;
+    border: 2px solid black;
+    inline-size: 70px;
+    margin-top: 1px;
+    margin-bottom: 0px;
+    margin-left: 1px;
+}
+button{
+    margin-left: 18px; 
+}
+#span_side_bar{
+    display: inline;
+}
