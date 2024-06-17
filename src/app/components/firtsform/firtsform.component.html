@@ -21,6 +21,7 @@
       <button type="submit" [disabled]="!form_nome_organizazzione.valid">
         INVIA
       </button>
+      <p *ngIf="verifica == false">ELEMENTO NON PRESENTE NELL ' ELENCO </p>
     </form>
   </div>
 </div>
