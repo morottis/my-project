@@ -1,10 +1,5 @@
-import { Component } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, OnDestroy } from '@angular/core';
+import {FormControl,FormGroup,ReactiveFormsModule,Validators} from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,7 +7,8 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ServizioHttpService } from '../../service/servizio-http.service';
 import { ObjectData } from '../../object-data';
-import { log } from 'console';
+import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-firtsform',
@@ -24,17 +20,22 @@ import { log } from 'console';
     ReactiveFormsModule,
     CommonModule,
     SidebarComponent,
+    RouterLink,
+    RouterOutlet
   ],
   providers: [],
   templateUrl: './firtsform.component.html',
   styleUrl: './firtsform.component.css',
 })
+
+
 export class FirtsformComponent {
   array: ObjectData[] = [];
   nomeOrganizzazione: any = '';
+  prefix : any = ''; 
   verifica: boolean = true;
 
-  constructor(private http: ServizioHttpService) {}
+  constructor(private http: ServizioHttpService , private router : Router ,) {}
 
   form_nome_organizazzione = new FormGroup({
     // form group
@@ -43,7 +44,7 @@ export class FirtsformComponent {
   });
 
   Invio_dati() {
-    this.nomeOrganizzazione = this.form_nome_organizazzione.value.nome?.trimEnd().trimStart();
+    this.prefix = this.form_nome_organizazzione.value.organizazzione?.trimEnd().trimStart(); 
     console.log(this.nomeOrganizzazione);
     this.form_nome_organizazzione.reset();
     this.http
@@ -55,21 +56,18 @@ export class FirtsformComponent {
           console.log(data);
           this.array = data;
           for (let i = 0; i < this.array.length; i++) {
-            if (this.nomeOrganizzazione == this.array[i].name) {
-              console.log(' nome giusto ');
-              this.verifica = true;
-              if ( this.verifica == true) 
-              {
-                break ; 
-              }
+            if (this.prefix == this.array[i].prefix) {
+              console.log(' prefisso gia presente ');
+              this.verifica = false;
+              break; 
             } else {
-              console.log(' nome sbagliato ');
-              this.verifica = false ; 
+              console.log(' prefisso non presente ');
+              this.verifica = true;
+              this.router.navigate(['/step2']);
             }
           }
-          //console.log( this.array[0].uuid);
         },
       });
   }
-  
+
 }

@@ -1,0 +1,20 @@
+<h1 id="title">SCEGLI LA TUA INTEGRAZIONE</h1>
+<div class="form_sidebar">
+  <app-sidebar></app-sidebar>
+  <div class="solo_form">
+    <form class="check_form" [formGroup]="gruppo_checkbox" (submit)="invio()">
+      <input type="checkbox" formControlName="SmartCo"/>
+      <label>SmartCo</label>
+      <br />
+      <input type="checkbox" formControlName="Datalean"/>
+      <label>Datalean</label>
+      <br />
+      <input type="checkbox" formControlName="Catalean"/>
+      <label>Catalean</label>
+      <br>
+      <button type="submit" [disabled]="controllo()">
+        INVIA
+      </button>
+    </form>
+  </div>
+</div>
