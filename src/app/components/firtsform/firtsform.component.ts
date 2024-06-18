@@ -34,6 +34,7 @@ export class FirtsformComponent {
   nomeOrganizzazione: any = '';
   prefix : any = ''; 
   verifica: boolean = true;
+  nome_db : any = ''; 
 
   constructor(private http: ServizioHttpService , private router : Router ,) {}
 
@@ -41,14 +42,15 @@ export class FirtsformComponent {
     // form group
     nome: new FormControl('', { validators: [Validators.required] }),
     organizazzione: new FormControl('', { validators: [Validators.required] }),
+    dbname : new FormControl('', { validators: [Validators.required] }),
   });
 
   Invio_dati() {
-    this.prefix = this.form_nome_organizazzione.value.organizazzione?.trimEnd().trimStart(); 
+    this.prefix = this.form_nome_organizazzione.value.organizazzione?.trimEnd().trimStart();
+    this.nome_db = this.form_nome_organizazzione.value.dbname?.trimEnd().trimStart(); 
     console.log(this.nomeOrganizzazione);
     this.form_nome_organizazzione.reset();
-    this.http
-      .prendo_valore<ObjectData[]>(
+    this.http.prendo_valore<ObjectData[]>(
         'https://organization.datalean-nodejs-dev.catalean.com/organization'
       )
       .subscribe({
@@ -61,7 +63,13 @@ export class FirtsformComponent {
               this.verifica = false;
               break; 
             } else {
-              console.log(' prefisso non presente ');
+              if(this.nome_db == this.array[i].dbname)
+                {
+                  console.log("nomedb presente "); 
+                  this.verifica = false ; 
+                  break; 
+                }
+              console.log(' prefisso non presente  o nomedb non presente ');
               this.verifica = true;
               this.router.navigate(['/step2']);
             }

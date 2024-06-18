@@ -1,0 +1,61 @@
+
+    <h1 class="title">COMPILA PER L' INTEGRAZIONE DI CATALEAN</h1>
+    <form [formGroup]="Catalean_form" (submit)="invio_Catalean()">
+
+      <mat-form-field class="input">
+        <mat-label>CataleanAccountld</mat-label>
+        <input matInput formControlName="CataleanAccountld" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>MapContainerUUlD</mat-label>
+        <input matInput formControlName="MapContainerUUlD" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>Name (obbligatorio)</mat-label>
+        <input matInput formControlName="Name" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>Version (obbligatorio)</mat-label>
+        <input matInput formControlName="Version" />
+      </mat-form-field>
+    
+      <mat-form-field class="input">
+        <mat-label>LastConsolidationDate</mat-label>
+        <input matInput formControlName="LastConsolidationDate" />
+      </mat-form-field>
+
+      <mat-form-field class="input">
+        <mat-label>DownloadLinklos</mat-label>
+        <input matInput formControlName="DownloadLinklos" />
+      </mat-form-field>
+
+      <br />  
+
+      <mat-form-field class="input">
+        <mat-label>DownloadLinkAndroid</mat-label>
+        <input matInput formControlName="DownloadLinkAndroid" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>DownloadLinkElectron</mat-label>
+        <input matInput formControlName="DownloadLinkElectron" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>ResourceBatchLimit</mat-label>
+        <input matInput formControlName="ResourceBatchLimit" />
+      </mat-form-field>
+
+      <span *ngFor="let item of contatore">
+        <mat-form-field class="input">
+            <mat-label>TextSearchFields <button type="button" class="bottone_aggiungi" (click)="aggiungi_text()"> + </button>  </mat-label>
+            <input matInput formControlName="TextSearchFields"/>
+          </mat-form-field>
+      </span>
+
+      <br />
+      <button type="submit" [disabled]="!Catalean_form.valid">INVIA</button>
+    </form>

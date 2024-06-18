@@ -1,0 +1,79 @@
+
+    <!--- *ngIf="this.gruppo_checkbox.value.SmartCo == true && controllo_comparsa == true"   -->
+    <h1 class="title">COMPILA PER L' INTEGRAZIONE DI SMARTCO</h1>
+    <form [formGroup]="SmartCo_form" (submit)="invio_SmartCo()">
+      <mat-form-field class="input">
+        <mat-label>DownloandLinkIos</mat-label>
+        <input matInput formControlName="DownloandLinkIos" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>DownloandLinkAndroid</mat-label>
+        <input matInput formControlName="DownloadLinkAndroid" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>Name (obbligatorio)</mat-label>
+        <input matInput formControlName="Name" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>Version (obbligatorio)</mat-label>
+        <input matInput formControlName="Version" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>CommunicationFeatureUUlD</mat-label>
+        <input matInput formControlName="CommunicationFeatureUUlD" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>HighlightsUUID</mat-label>
+        <input matInput formControlName="HighlightsUUID" />
+      </mat-form-field>
+  
+      <br />
+  
+      <mat-form-field class="input">
+        <mat-label>FirstPageUUID</mat-label>
+        <input matInput formControlName="FirstPageUUID" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>StickyUUID</mat-label>
+        <input matInput formControlName="StickyUUID" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>PinToTopCap</mat-label>
+        <input matInput formControlName="PinToTopCap" />
+      </mat-form-field>
+  
+      <mat-form-field class="input">
+        <mat-label>HighlightLimit</mat-label>
+        <input matInput formControlName="HighlightLimit" />
+      </mat-form-field>
+      <br />
+  
+      <div class="div_container" *ngFor="let item of contatore">
+        <div class="top_part">
+          <span> SPECIAL FEATURES </span>
+          <button class="bottone_aggiungi" (click)="bottone_features()">+</button>
+        </div>
+        <div class="center_part">
+          <form>
+              <mat-form-field class="input">
+                  <mat-label>PinToTopCap</mat-label>
+                  <input matInput formControlName="PinToTopCap" />
+                </mat-form-field>
+                <mat-form-field class="input">
+                  <mat-label>HighlightLimit</mat-label>
+                  <input matInput formControlName="HighlightLimit" />
+                </mat-form-field>
+          </form>
+        </div>
+      </div>
+      <br />
+      <br />
+      <button type="submit" [disabled]="!SmartCo_form.valid">INVIA</button>
+    </form>

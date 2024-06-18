@@ -1,20 +1,33 @@
-<h1 id="title">SCEGLI LA TUA INTEGRAZIONE</h1>
+<h1 class="title">SCEGLI LA TUA INTEGRAZIONE</h1>
 <div class="form_sidebar">
   <app-sidebar></app-sidebar>
   <div class="solo_form">
     <form class="check_form" [formGroup]="gruppo_checkbox" (submit)="invio()">
-      <input type="checkbox" formControlName="SmartCo"/>
+      <input type="checkbox" formControlName="SmartCo" />
       <label>SmartCo</label>
       <br />
-      <input type="checkbox" formControlName="Datalean"/>
-      <label>Datalean</label>
-      <br />
-      <input type="checkbox" formControlName="Catalean"/>
+      <input type="checkbox" formControlName="Catalean" />
       <label>Catalean</label>
-      <br>
-      <button type="submit" [disabled]="controllo()">
-        INVIA
-      </button>
+      <br />
+      <input type="checkbox" formControlName="nessuno" />
+      <label>nessuno</label>
+      <br />
+      <button type="submit" [disabled]="controllo()">INVIA</button>
     </form>
   </div>
+</div>
+
+<div class="integration_form" *ngIf="this.gruppo_checkbox.value.SmartCo == true && controllo_comparsa_smartco == true"><app-smart-co></app-smart-co></div>
+
+<div *ngIf="this.gruppo_checkbox.value.Catalean == true && controllo_comparsa_catalean == true" class="integration_form"><app-catalean></app-catalean></div>
+
+<div
+  *ngIf="
+    this.gruppo_checkbox.value.SmartCo == true &&
+    this.gruppo_checkbox.value.Catalean == true &&
+    controllo_comparsa_entrambi == true
+  "
+  class="integration_form"
+>
+  entrambi
 </div>

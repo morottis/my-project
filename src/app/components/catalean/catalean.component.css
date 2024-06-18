@@ -1,25 +1,8 @@
-.check_form{
-    text-align: center;
-    font-size: large;
-    transform: scale(1.5);
-    line-height: 2;
-}
 .title{
     padding-top: 30px;
     text-align: center;
 }
-.solo_form
-{
-    margin-top: 40px;
-  margin-right: 48%;
-  display: flex;
-  align-items: center; 
-  justify-items: center;
-}
-.form_sidebar{
-  justify-content: space-between;
-  display: flex;
-}
+
 .integration_form{
 
   margin-top:3%;
@@ -49,7 +32,7 @@
 .bottone_aggiungi{
   display: inline-flex;
   border-radius: 100%;
-  font-size: 20px;
+  font-size: 18px;
   border: 1px solid black;
 }
 .center_part{
