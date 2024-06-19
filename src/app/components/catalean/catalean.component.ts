@@ -117,6 +117,8 @@ export class CataleanComponent {
       Url : ['']
     });
     this.formGroups.push(newFormGroup);// lo push nell array di form group 
+    console.log('aggiunto'); 
+    
   }
 
   rimuoviFormGroup(index: number)

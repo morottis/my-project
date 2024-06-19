@@ -1,5 +1,5 @@
 <h1 class="title">COMPILA PER L' INTEGRAZIONE DI CATALEAN</h1>
-<form [formGroup]="Catalean_form" (submit)="invio_Catalean()">
+<form [formGroup]="Catalean_form" >
   <mat-form-field class="input">
     <mat-label>CataleanAccountld</mat-label>
     <input matInput formControlName="CataleanAccountld" />
@@ -123,16 +123,16 @@
           <!--formGroups.control è una proprietà del FormArray che contiene l'array di FormGroup o FormControl che fanno parte del FormArray.-->
           <mat-form-field class="input">
             <mat-label>Title</mat-label>
-            <input matInput formControlName="Title" />
+            <input matInput formControlName="Title"/>
           </mat-form-field>
           <mat-form-field class="input">
             <mat-label>Iconcls</mat-label>
-            <input matInput formControlName="Iconcls" />
+            <input matInput formControlName="Iconcls"/>
           </mat-form-field>
           <br />
           <mat-form-field class="input">
             <mat-label>Url</mat-label>
-            <input matInput formControlName="Url" />
+            <input matInput formControlName="Url"/>
           </mat-form-field>
           <br />
           <button type="button" (click)="rimuoviFormGroup(i)">-</button>
@@ -141,5 +141,5 @@
     </form>
   </div>
   <br />
-  <button type="submit" [disabled]="!Catalean_form.valid" >INVIA</button>
+  <button type="submit" [disabled]="!Catalean_form.valid" (click)="invio_Catalean()">INVIA</button>
 </form>
