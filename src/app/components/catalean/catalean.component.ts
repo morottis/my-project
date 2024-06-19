@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output , EventEmitter } from '@angular/core';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import {
@@ -31,8 +31,14 @@ import { SmartCoComponent } from '../smart-co/smart-co.component';
   styleUrl: './catalean.component.css'
 })
 export class CataleanComponent {
+
+  @Output() evento = new EventEmitter<boolean>();  ; 
+
+  controllo_click : boolean = false; 
+  //controllo_chiusura :boolean = false ;  
   contatore : Array<number> = [0]; 
-  formArrayGroup: FormGroup; // l' arry che crera  il form group che conterra un form di array  
+  formArrayGroup: FormGroup; // l' arry che crera  il form group che conterra un form di array 
+  formArrayGrouptext : FormGroup ;  
 
   Catalean_form = new FormGroup({
     Name: new FormControl('', { validators: Validators.required }),
@@ -53,34 +59,62 @@ export class CataleanComponent {
     text: new FormControl('', {}),
   });
 
-  aggiungi_text()
-  {
-    this.contatore.push(0); 
-  }
 
-  invio_Catalean()
+  invio_Catalean()  // variabile o return 
   {
     console.log( 'inviato '); 
     console.log(this.formArrayGroup.value);
+    console.log(this.formArrayGrouptext.value);
     this.formArrayGroup.reset
+    this.controllo_click = true ; 
+    //this.controllo_chiusura = true ; 
+    this.evento.emit(this.controllo_click); 
   }
-  
+
+  /*invio_data()
+  {
+    this.evento.emit(this.controllo_click); 
+  }*/
   constructor(private fb: FormBuilder) {
     this.formArrayGroup = this.fb.group({ //fb.group crea il primo form group 
-      formGroups: this.fb.array([])//il primo form group contiene un form array 
-    });
+      formGroups: this.fb.array([
+      ])//il primo form group contiene un form array 
+    }); 
+    this.formArrayGrouptext = this.fb.group(
+    {
+      formGroupstext : this.fb.array([])
+    }); 
   }
 
   get formGroups() { // viene preso nel ngFor
     return this.formArrayGroup.get('formGroups') as FormArray; // usato per accedere al form group
   }
+  get formGroupstext()
+  {
+    return this.formArrayGrouptext.get('formGroupstext') as FormArray ; 
+  }
+
+  aggiungi_text()
+  {
+    const newFormGroup = this.fb.group(
+      {
+        TextSearchFields : [''], 
+      }
+    ) 
+    this.formGroupstext.push(newFormGroup); 
+  }
+
+  rimuoviFormGrouptext(index: number)
+  {
+    this.formGroupstext.removeAt(index);// prendo il form  group con il get e lo elimino grazie all' indice add esso asegnato 
+  }
 
   aggiungi_FormGroup() 
   {
     const newFormGroup = this.fb.group({ // creo unu altro form group 
-      Title: [' '],
-      Iconcls: [' '],
-      Url : [' ']
+      Title: [''],
+      Iconcls: [''],
+      Url : ['']
     });
     this.formGroups.push(newFormGroup);// lo push nell array di form group 
   }

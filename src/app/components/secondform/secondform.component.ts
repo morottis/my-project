@@ -36,6 +36,8 @@ export class SecondformComponent {
   controllo_comparsa_smartco: boolean = false;
   controllo_comparsa_catalean : boolean = false ; 
   controllo_comparsa_entrambi : boolean = false ; 
+  controllo_invio_form_catalean : boolean = false; 
+  controllo_scomparsa_catalean : boolean = true ; 
   //contatore : Array<number> = [ 0 ] ; 
 
   gruppo_checkbox = new FormGroup({
@@ -44,33 +46,10 @@ export class SecondformComponent {
     nessuno: new FormControl(false, {}),
   });
 
-  /*SmartCo_form = new FormGroup({
-    Name: new FormControl('', { validators: Validators.required }),
-    Version: new FormControl('', { validators: Validators.required }),
-    DownloadLinkAndroid: new FormControl('', {}),
-    DownloandLinkIos: new FormControl('', {}),
-    CommunicationFeatureUUlD: new FormControl('', {}),
-    HighlightsUUID: new FormControl('', {}),
-    FirstPageUUID: new FormControl('', {}),
-    StickyUUID: new FormControl('', {}),
-    PinToTopCap: new FormControl('', {}),
-    HighlightLimit: new FormControl('', {}),
-  });*/
-
-  /*Catalean_form = new FormGroup({
-    Name: new FormControl('', { validators: Validators.required }),
-    Version: new FormControl('', { validators: Validators.required }),
-    CataleanAccountld: new FormControl('', {}),
-    MapContainerUUlD: new FormControl('', {}),
-
-    TextSearchFields: new FormControl('', {}),
-
-    LastConsolidationDate: new FormControl('', {}),
-    DownloadLinklos: new FormControl('', {}),
-    DownloadLinkAndroid: new FormControl('', {}),
-    DownloadLinkElectron: new FormControl('', {}),
-    ResourceBatchLimit: new FormControl('', {}),
-  });*/
+  ricevo_dati(value : boolean , )
+  {
+    this.controllo_invio_form_catalean = value; 
+  }
 
   controllo(): boolean {
     if (
@@ -104,17 +83,5 @@ export class SecondformComponent {
         return this.controllo_comparsa_catalean = false  ,  this.controllo_comparsa_smartco = false; 
       }
   }
-  /*bottone_features()
-  {
-    this.contatore.push(0); 
-  }*/
-  /*invio_SmartCo() 
-  {
-
-  }*/
-
-  /*invio_Catalean()
-  {
-
-  }*/
+  
 }
