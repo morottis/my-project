@@ -55,7 +55,7 @@
       </mat-form-field>
       <br />
   
-      <div class="div_container" *ngFor="let item of contatore">
+      <!--<div class="div_container" *ngFor="let item of contatore">
         <div class="top_part">
           <span> SPECIAL FEATURES </span>
           <button class="bottone_aggiungi" (click)="bottone_features()">+</button>
@@ -74,6 +74,32 @@
         </div>
       </div>
       <br />
-      <br />
+      <br />-->
+      <div class="div_container">
+        <div class="top_part">
+          <span>  ADDICTIONAL MENU ITEMS </span>
+          <button class="bottone_aggiungi" (click)="aggiungi_FormGroup()">+</button>
+        </div>
+      
+       <form [formGroup]="formArrayGroup" >
+        <div formArrayName="formGroups" class="center_part">
+          <div *ngFor="let group of formGroups.controls; let i = index" [formGroupName]="i" class="form-group"><!--formGroups.control è una proprietà del FormArray che contiene l'array di FormGroup o FormControl che fanno parte del FormArray.-->
+            <mat-form-field class="input">
+              <mat-label>PinToTopCap</mat-label>
+              <input matInput formControlName="PinToTopCap" />
+            </mat-form-field>
+            <mat-form-field class="input">
+              <mat-label>HighlightLimit</mat-label>
+              <input matInput formControlName="HighlightLimit" />
+            </mat-form-field>
+            <br>
+            <button type="button" (click)="rimuoviFormGroup(i)">-</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <br>
       <button type="submit" [disabled]="!SmartCo_form.valid">INVIA</button>
     </form>
+
+    <!----->

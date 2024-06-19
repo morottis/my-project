@@ -55,7 +55,78 @@
             <input matInput formControlName="TextSearchFields"/>
           </mat-form-field>
       </span>
-
+      <!---->
+      <input type="checkbox" formControlName="AutoHideVerticalFilter"/>
+      <label>AutoHideVerticalFilter</label>
       <br />
-      <button type="submit" [disabled]="!Catalean_form.valid">INVIA</button>
+      <!---->
+      <div class="div_container_duo" >
+        <div class="top_part">
+          <span> ProductGrid </span>
+        </div>
+        <div class="center_part">
+          <form>
+              <mat-form-field class="input">
+                  <mat-label>EmptyResultMessage</mat-label>
+                  <input matInput formControlName="EmptyResultMessage" />
+                </mat-form-field>
+                <mat-form-field class="input">
+                  <mat-label>FirstSearchMessage</mat-label>
+                  <input matInput formControlName="FirstSearchMessage" />
+                </mat-form-field>
+          </form>
+        </div>
+      </div>
+      <!---->
+      <div class="div_container" >
+        <div class="top_part">
+          <span> CREDITSANDPRIVACY </span>
+        </div>
+        <div class="center_part">
+          <form>
+              <mat-form-field class="input">
+                  <mat-label>UrlWebSite</mat-label>
+                  <input matInput formControlName="UrlWebSite" />
+                </mat-form-field>
+                <mat-form-field class="input">
+                  <mat-label>CompanyLogo</mat-label>
+                  <input matInput formControlName="CompanyLogo" />
+                </mat-form-field>
+                <mat-form-field class="input">
+                  <mat-label>text</mat-label>
+                  <input matInput formControlName="text" />
+                </mat-form-field>
+          </form>
+        </div>
+      </div>
+    <!----->
+  <div class="div_container">
+      <div class="top_part">
+        <span>  ADDICTIONAL MENU ITEMS </span>
+        <button class="bottone_aggiungi" (click)="aggiungi_FormGroup()">+</button>
+      </div>
+     <form [formGroup]="formArrayGroup" >
+      <div formArrayName="formGroups" class="center_part">
+        <div *ngFor="let group of formGroups.controls; let i = index" [formGroupName]="i" class="form-group"><!--formGroups.control è una proprietà del FormArray che contiene l'array di FormGroup o FormControl che fanno parte del FormArray.-->
+          <mat-form-field class="input">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="Title" />
+          </mat-form-field>
+          <mat-form-field class="input">
+            <mat-label>Iconcls</mat-label>
+            <input matInput formControlName="Iconcls" />
+          </mat-form-field>
+          <br>
+          <mat-form-field class="input">
+            <mat-label>Url</mat-label>
+            <input matInput formControlName="Url" />
+          </mat-form-field>
+          <br>
+          <button type="button" (click)="rimuoviFormGroup(i)">-</button>
+        </div>
+      </div>
     </form>
+  </div>
+  <br>
+  <button type="submit" [disabled]="!Catalean_form.valid">INVIA</button>
+</form>
