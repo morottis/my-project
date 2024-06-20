@@ -5,5 +5,6 @@ import { SecondformComponent } from './components/secondform/secondform.componen
 
 export const routes: Routes = [
     {path : 'step2' , component : SecondformComponent},
+    {path : 'step3' , component : FirtsformComponent},
     {path : '', component : FirtsformComponent}
 ];

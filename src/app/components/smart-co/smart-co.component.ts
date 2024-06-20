@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, Route, Router } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import {
   FormArray,
@@ -13,7 +13,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
-
 
 @Component({
   selector: 'app-smart-co',
@@ -52,7 +51,7 @@ export class SmartCoComponent {
     this.contatore.push(0); 
   }
   
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder  ,  private router : Router) {
     this.formArrayGroup = this.fb.group({ //fb.group crea il primo form group 
       formGroups: this.fb.array([])//il primo form group contiene un form array 
     });
@@ -78,7 +77,9 @@ export class SmartCoComponent {
   
   invio_SmartCo() 
   {
+    console.log(this.SmartCo_form); 
     console.log(this.formArrayGroup.value);
     this.formArrayGroup.reset
+    this.router.navigate(['/step3']);
   }
 }

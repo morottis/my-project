@@ -1,5 +1,5 @@
-import { Component, Output , EventEmitter } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { Component, Output , EventEmitter, Input } from '@angular/core';
+import { RouterOutlet, RouterLink, Route, Router } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import {
   FormControl,
@@ -18,28 +18,28 @@ import { SmartCoComponent } from '../smart-co/smart-co.component';
 @Component({
   selector: 'app-catalean',
   standalone: true,
-  imports: [     RouterLink,
-    RouterOutlet,
-    SidebarComponent,
+  imports: [ RouterLink,RouterOutlet,SidebarComponent,
     ReactiveFormsModule,
     CommonModule,
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
-    SmartCoComponent],
+    SmartCoComponent
+  ],
   templateUrl: './catalean.component.html',
   styleUrl: './catalean.component.css'
 })
 export class CataleanComponent {
 
-  @Output() evento = new EventEmitter<boolean>();  ; 
+  @Output() evento = new EventEmitter<boolean>();  
+  @Input() controllo_catalean : boolean = false ; // li utilizzo per prendere i dati dal secondo form e capire se cliccando invio lo mando al prossimo form oppure lo faccio con smartco
+  @Input() controllo_smartCo : boolean = false ;  
 
   controllo_click : boolean = false; 
   //controllo_chiusura :boolean = false ;  
   contatore : Array<number> = [0]; 
   formArrayGroup: FormGroup; // l' arry che crera  il form group che conterra un form di array 
   formArrayGrouptext : FormGroup ;  
-
   Catalean_form = new FormGroup({
     Name: new FormControl('', { validators: Validators.required }),
     Version: new FormControl('', { validators: Validators.required }),
@@ -59,6 +59,16 @@ export class CataleanComponent {
     text: new FormControl('', {}),
   });
 
+  constructor(private fb: FormBuilder , private router : Router) {
+    this.formArrayGroup = this.fb.group({ //fb.group crea il primo form group 
+      formGroups: this.fb.array([
+      ])//il primo form group contiene un form array 
+    }); 
+    this.formArrayGrouptext = this.fb.group(
+    {
+      formGroupstext : this.fb.array([])
+    }); 
+  }
 
   invio_Catalean()  // variabile o return 
   {
@@ -69,21 +79,15 @@ export class CataleanComponent {
     this.controllo_click = true ; 
     //this.controllo_chiusura = true ; 
     this.evento.emit(this.controllo_click); 
-  }
-
-  /*invio_data()
-  {
-    this.evento.emit(this.controllo_click); 
-  }*/
-  constructor(private fb: FormBuilder) {
-    this.formArrayGroup = this.fb.group({ //fb.group crea il primo form group 
-      formGroups: this.fb.array([
-      ])//il primo form group contiene un form array 
-    }); 
-    this.formArrayGrouptext = this.fb.group(
-    {
-      formGroupstext : this.fb.array([])
-    }); 
+    if ( this.controllo_catalean == true && this.controllo_smartCo == false)
+      {
+        console.log( ' invio con catalean '); 
+        this.router.navigate(['/step3']);
+      }
+      else if(this.controllo_catalean == true && this.controllo_smartCo == true)
+      {
+        console.log( ' non faccio nulla l invio lo fa smartco '); 
+      }
   }
 
   get formGroups() { // viene preso nel ngFor

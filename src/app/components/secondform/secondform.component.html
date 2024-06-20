@@ -19,7 +19,7 @@
 
 <div class="integration_form" *ngIf="this.gruppo_checkbox.value.SmartCo == true && controllo_comparsa_smartco == true"><app-smart-co></app-smart-co></div>
 
-<div *ngIf="this.gruppo_checkbox.value.Catalean == true && controllo_comparsa_catalean == true" class="integration_form"><app-catalean></app-catalean></div>
+<div *ngIf="this.gruppo_checkbox.value.Catalean == true && controllo_comparsa_catalean == true" class="integration_form"><app-catalean [controllo_catalean]="controllo_comparsa_catalean" [controllo_smartCo]="controllo_comparsa_smartco"></app-catalean></div>
 
 <div
   *ngIf="
@@ -29,6 +29,6 @@
   "
   class="integration_form"
 >
-  <app-catalean (evento)="ricevo_dati($event)" ></app-catalean>
+  <app-catalean (evento)="ricevo_dati($event)" [controllo_catalean]="controllo_comparsa_catalean" [controllo_smartCo]="controllo_comparsa_smartco"></app-catalean>
   <app-smart-co *ngIf="controllo_invio_form_catalean == true"></app-smart-co>
 </div>

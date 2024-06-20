@@ -57,6 +57,7 @@ export class SecondformComponent {
       return false;
     }
   }
+  
   invio(): boolean {
     if(this.gruppo_checkbox.value.SmartCo == true)
       {
