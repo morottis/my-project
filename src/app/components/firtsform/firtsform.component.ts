@@ -35,6 +35,7 @@ export class FirtsformComponent {
   prefix : any = ''; 
   verifica: boolean = true;
   nome_db : any = ''; 
+  scritta_errore : string = ''; 
 
   constructor(private http: ServizioHttpService , private router : Router ,) {}
 
@@ -49,7 +50,7 @@ export class FirtsformComponent {
     this.prefix = this.form_nome_organizazzione.value.organizazzione?.trimEnd().trimStart();
     this.nome_db = this.form_nome_organizazzione.value.dbname?.trimEnd().trimStart(); 
     console.log(this.nomeOrganizzazione);
-    this.form_nome_organizazzione.reset();
+    //this.form_nome_organizazzione.reset();
     this.http.prendo_valore<ObjectData[]>(
         'https://organization.datalean-nodejs-dev.catalean.com/organization'
       )
@@ -60,12 +61,14 @@ export class FirtsformComponent {
           for (let i = 0; i < this.array.length; i++) {
             if (this.prefix == this.array[i].prefix) {
               console.log(' prefisso gia presente ');
+              this.scritta_errore = 'prefisso errato'; 
               this.verifica = false;
               break; 
             } else {
               if(this.nome_db == this.array[i].dbname)
                 {
                   console.log("nomedb presente "); 
+                  this.scritta_errore = 'nomedb errato '; 
                   this.verifica = false ; 
                   break; 
                 }
@@ -76,6 +79,10 @@ export class FirtsformComponent {
           }
         },
       });
+      
+      
+
+      
   }
 
 }

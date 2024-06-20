@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet, RouterLink, Route } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import {FormControl,FormGroup,ReactiveFormsModule,Validators,} from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { SmartCoComponent } from '../smart-co/smart-co.component';
 import { CataleanComponent } from '../catalean/catalean.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-secondform',
@@ -28,12 +29,12 @@ import { CataleanComponent } from '../catalean/catalean.component';
   styleUrl: './secondform.component.css',
 })
 export class SecondformComponent {
-  controllo_comparsa_smartco: boolean = false;
+  controllo_comparsa_smartco: boolean = false; // utilizzo per i controlli di visualizzazione successiva dei form 
   controllo_comparsa_catalean : boolean = false ; 
-  controllo_comparsa_entrambi : boolean = false ; 
+  controllo_comparsa_entrambi : boolean = false ;  
+
   controllo_invio_form_catalean : boolean = false; 
   controllo_scomparsa_catalean : boolean = true ; 
-  //contatore : Array<number> = [ 0 ] ; 
 
   gruppo_checkbox = new FormGroup({
     SmartCo: new FormControl(false, {}),
@@ -41,20 +42,33 @@ export class SecondformComponent {
     nessuno: new FormControl(false, {}),
   });
 
+  constructor( private router : Router)
+  {
+
+  }
+
   ricevo_dati(value : boolean , )
   {
     this.controllo_invio_form_catalean = value; 
+    
   }
 
-  controllo(): boolean {
+  controllo(): boolean { // controllo se il bottone puo esserte cliccato oppure no 
     if (
-      this.gruppo_checkbox.value.Catalean == false &&
-      this.gruppo_checkbox.value.SmartCo == false &&
-      this.gruppo_checkbox.value.nessuno == false
-    ) {
+      this.gruppo_checkbox.value.Catalean == false && this.gruppo_checkbox.value.SmartCo == false && this.gruppo_checkbox.value.nessuno == false) 
+      {
       return true;
-    } else {
-      return false;
+    } 
+    else 
+    {
+      if((this.gruppo_checkbox.value.Catalean == true || this.gruppo_checkbox.value.SmartCo == true ) && this.gruppo_checkbox.value.nessuno == true)
+      {
+        return true
+      }
+      else
+      {
+        return false;
+      }
     }
   }
   
@@ -76,8 +90,12 @@ export class SecondformComponent {
       }   
       else
       {
+        this.router.navigate(['/step3']);
         return this.controllo_comparsa_catalean = false  ,  this.controllo_comparsa_smartco = false; 
+
       }
   }
+
+  
   
 }

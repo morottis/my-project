@@ -38,7 +38,7 @@ export class CataleanComponent {
   controllo_click : boolean = false; 
   //controllo_chiusura :boolean = false ;  
   contatore : Array<number> = [0]; 
-  formArrayGroup: FormGroup; // l' arry che crera  il form group che conterra un form di array 
+  formArrayGroup: FormGroup; // l' array che crera  il form group che conterra un form di array 
   formArrayGrouptext : FormGroup ;  
   Catalean_form = new FormGroup({
     Name: new FormControl('', { validators: Validators.required }),
@@ -62,6 +62,7 @@ export class CataleanComponent {
   constructor(private fb: FormBuilder , private router : Router) {
     this.formArrayGroup = this.fb.group({ //fb.group crea il primo form group 
       formGroups: this.fb.array([
+        
       ])//il primo form group contiene un form array 
     }); 
     this.formArrayGrouptext = this.fb.group(
@@ -82,7 +83,7 @@ export class CataleanComponent {
     if ( this.controllo_catalean == true && this.controllo_smartCo == false)
       {
         console.log( ' invio con catalean '); 
-        this.router.navigate(['/step3']);
+        //this.router.navigate(['/step3']);
       }
       else if(this.controllo_catalean == true && this.controllo_smartCo == true)
       {
