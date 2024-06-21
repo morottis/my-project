@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink, Route, Router } from '@angular/router';
+import { RouterOutlet, RouterLink, Router } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import {
   FormArray,
@@ -31,7 +31,6 @@ import { PassagioDatiService } from '../../service/passagio-dati.service';
 })
 export class SmartCoComponent {
 
-  contatore : Array<number> = [ 0 ] ; 
   formArrayGroup: FormGroup;
   
   SmartCo_form = new FormGroup({
@@ -46,11 +45,6 @@ export class SmartCoComponent {
     PinToTopCap: new FormControl('', {}),
     HighlightLimit: new FormControl('', {}),
   });
-
-  bottone_features()
-  {
-    this.contatore.push(0); 
-  }
   
   constructor(private fb: FormBuilder  ,  private router : Router , private  service : PassagioDatiService) {
     this.formArrayGroup = this.fb.group({ //fb.group crea il primo form group 

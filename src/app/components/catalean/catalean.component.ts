@@ -38,8 +38,6 @@ export class CataleanComponent {
   @Input() controllo_smartCo : boolean = false ;  
 
   controllo_click : boolean = false; 
-  //controllo_chiusura :boolean = false ;  
-  contatore : Array<number> = [0]; 
   formArrayGroup: FormGroup; // l' array che crera  il form group che conterra un form di array 
   formArrayGrouptext : FormGroup ;  
   Catalean_form = new FormGroup({
@@ -63,16 +61,13 @@ export class CataleanComponent {
 
   constructor(private fb: FormBuilder , private router : Router , private service : PassagioDatiService) {
     this.formArrayGroup = this.fb.group({ //fb.group crea il primo form group 
-      formGroups: this.fb.array([
-        
+      formGroups: this.fb.array([  
       ])//il primo form group contiene un form array 
     }); 
     this.formArrayGrouptext = this.fb.group(
     {
       formGroupstext : this.fb.array([])
     }); 
-    //this.service.sharedData.subscribe(title => this.ti)
- 
   }
 
   invio_Catalean()  // variabile o return 
@@ -81,9 +76,8 @@ export class CataleanComponent {
     console.log(this.formArrayGroup.value);
     console.log(this.formArrayGrouptext.value);
     console.log(this.Catalean_form.value); 
-    this.formArrayGroup.reset
     this.controllo_click = true ; 
-    //this.controllo_chiusura = true ; 
+
     this.evento.emit(this.controllo_click); 
     if ( this.controllo_catalean == true && this.controllo_smartCo == false)
       {

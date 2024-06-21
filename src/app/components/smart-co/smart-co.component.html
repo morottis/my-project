@@ -1,105 +1,93 @@
+<h1 class="title">COMPILA PER L' INTEGRAZIONE DI SMARTCO</h1>
+<form [formGroup]="SmartCo_form">
+  <mat-form-field class="input">
+    <mat-label>DownloandLinkIos</mat-label>
+    <input matInput formControlName="DownloandLinkIos" />
+  </mat-form-field>
 
-    <!--- *ngIf="this.gruppo_checkbox.value.SmartCo == true && controllo_comparsa == true"   -->
-    <h1 class="title">COMPILA PER L' INTEGRAZIONE DI SMARTCO</h1>
-    <form [formGroup]="SmartCo_form" >
-      <mat-form-field class="input">
-        <mat-label>DownloandLinkIos</mat-label>
-        <input matInput formControlName="DownloandLinkIos" />
-      </mat-form-field>
-  
-      <mat-form-field class="input">
-        <mat-label>DownloandLinkAndroid</mat-label>
-        <input matInput formControlName="DownloadLinkAndroid" />
-      </mat-form-field>
-  
-      <mat-form-field class="input">
-        <mat-label>Name (obbligatorio)</mat-label>
-        <input matInput formControlName="Name" />
-      </mat-form-field>
-  
-      <mat-form-field class="input">
-        <mat-label>Version (obbligatorio)</mat-label>
-        <input matInput formControlName="Version" />
-      </mat-form-field>
-  
-      <mat-form-field class="input">
-        <mat-label>CommunicationFeatureUUlD</mat-label>
-        <input matInput formControlName="CommunicationFeatureUUlD" />
-      </mat-form-field>
-  
-      <mat-form-field class="input">
-        <mat-label>HighlightsUUID</mat-label>
-        <input matInput formControlName="HighlightsUUID" />
-      </mat-form-field>
-  
-      <br />
-  
-      <mat-form-field class="input">
-        <mat-label>FirstPageUUID</mat-label>
-        <input matInput formControlName="FirstPageUUID" />
-      </mat-form-field>
-  
-      <mat-form-field class="input">
-        <mat-label>StickyUUID</mat-label>
-        <input matInput formControlName="StickyUUID" />
-      </mat-form-field>
-  
-      <mat-form-field class="input">
-        <mat-label>PinToTopCap</mat-label>
-        <input matInput formControlName="PinToTopCap" />
-      </mat-form-field>
-  
-      <mat-form-field class="input">
-        <mat-label>HighlightLimit</mat-label>
-        <input matInput formControlName="HighlightLimit" />
-      </mat-form-field>
-      <br />
-  
-      <!--<div class="div_container" *ngFor="let item of contatore">
-        <div class="top_part">
-          <span> SPECIAL FEATURES </span>
-          <button class="bottone_aggiungi" (click)="bottone_features()">+</button>
-        </div>
-        <div class="center_part">
-          <form>
-              <mat-form-field class="input">
-                  <mat-label>PinToTopCap</mat-label>
-                  <input matInput formControlName="PinToTopCap" />
-                </mat-form-field>
-                <mat-form-field class="input">
-                  <mat-label>HighlightLimit</mat-label>
-                  <input matInput formControlName="HighlightLimit" />
-                </mat-form-field>
-          </form>
+  <mat-form-field class="input">
+    <mat-label>DownloandLinkAndroid</mat-label>
+    <input matInput formControlName="DownloadLinkAndroid" />
+  </mat-form-field>
+
+  <mat-form-field class="input">
+    <mat-label>Name (obbligatorio)</mat-label>
+    <input matInput formControlName="Name" />
+  </mat-form-field>
+
+  <mat-form-field class="input">
+    <mat-label>Version (obbligatorio)</mat-label>
+    <input matInput formControlName="Version" />
+  </mat-form-field>
+
+  <mat-form-field class="input">
+    <mat-label>CommunicationFeatureUUlD</mat-label>
+    <input matInput formControlName="CommunicationFeatureUUlD" />
+  </mat-form-field>
+
+  <mat-form-field class="input">
+    <mat-label>HighlightsUUID</mat-label>
+    <input matInput formControlName="HighlightsUUID" />
+  </mat-form-field>
+
+  <br />
+
+  <mat-form-field class="input">
+    <mat-label>FirstPageUUID</mat-label>
+    <input matInput formControlName="FirstPageUUID" />
+  </mat-form-field>
+
+  <mat-form-field class="input">
+    <mat-label>StickyUUID</mat-label>
+    <input matInput formControlName="StickyUUID" />
+  </mat-form-field>
+
+  <mat-form-field class="input">
+    <mat-label>PinToTopCap</mat-label>
+    <input matInput formControlName="PinToTopCap" />
+  </mat-form-field>
+
+  <mat-form-field class="input">
+    <mat-label>HighlightLimit</mat-label>
+    <input matInput formControlName="HighlightLimit" />
+  </mat-form-field>
+  <br />
+  <div class="div_container">
+    <div class="top_part">
+      <span> ADDICTIONAL MENU ITEMS </span>
+      <button class="bottone_aggiungi" (click)="aggiungi_FormGroup()">+</button>
+    </div>
+
+    <form [formGroup]="formArrayGroup">
+      <div formArrayName="formGroups" class="center_part">
+        <div
+          *ngFor="let group of formGroups.controls; let i = index"
+          [formGroupName]="i"
+          class="form-group"
+        >
+          <!--formGroups.control è una proprietà del FormArray che contiene l'array di FormGroup o FormControl che fanno parte del FormArray.-->
+          <mat-form-field class="input">
+            <mat-label>PinToTopCap</mat-label>
+            <input matInput formControlName="PinToTopCap" />
+          </mat-form-field>
+          <mat-form-field class="input">
+            <mat-label>HighlightLimit</mat-label>
+            <input matInput formControlName="HighlightLimit" />
+          </mat-form-field>
+          <br />
+          <button type="button" (click)="rimuoviFormGroup(i)">-</button>
         </div>
       </div>
-      <br />
-      <br />-->
-      <div class="div_container">
-        <div class="top_part">
-          <span>  ADDICTIONAL MENU ITEMS </span>
-          <button class="bottone_aggiungi" (click)="aggiungi_FormGroup()">+</button>
-        </div>
-      
-       <form [formGroup]="formArrayGroup" >
-        <div formArrayName="formGroups" class="center_part">
-          <div *ngFor="let group of formGroups.controls; let i = index" [formGroupName]="i" class="form-group"><!--formGroups.control è una proprietà del FormArray che contiene l'array di FormGroup o FormControl che fanno parte del FormArray.-->
-            <mat-form-field class="input">
-              <mat-label>PinToTopCap</mat-label>
-              <input matInput formControlName="PinToTopCap" />
-            </mat-form-field>
-            <mat-form-field class="input">
-              <mat-label>HighlightLimit</mat-label>
-              <input matInput formControlName="HighlightLimit" />
-            </mat-form-field>
-            <br>
-            <button type="button" (click)="rimuoviFormGroup(i)">-</button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <br>
-      <button type="submit" [disabled]="!SmartCo_form.valid" (click)="invio_SmartCo()">INVIA</button>
     </form>
+  </div>
+  <br />
+  <button
+    type="submit"
+    [disabled]="!SmartCo_form.valid"
+    (click)="invio_SmartCo()"
+  >
+    INVIA
+  </button>
+</form>
 
-    <!----->
+<!----->

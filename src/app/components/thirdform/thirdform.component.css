@@ -8,11 +8,16 @@
     font-size: 13px;
     display:  grid;
     grid-template-columns: repeat(4,1fr) ;
+    grid-gap: 7px;
 }
 .title{
     text-align: center;
 }
 
 .invio{
+    font-size: 15px;
+}
+.contenitore_bottone
+{
     text-align: center;
 }
