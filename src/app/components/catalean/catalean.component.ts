@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { SmartCoComponent } from '../smart-co/smart-co.component';
+import { PassagioDatiService } from '../../service/passagio-dati.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -59,7 +61,7 @@ export class CataleanComponent {
     text: new FormControl('', {}),
   });
 
-  constructor(private fb: FormBuilder , private router : Router) {
+  constructor(private fb: FormBuilder , private router : Router , private service : PassagioDatiService) {
     this.formArrayGroup = this.fb.group({ //fb.group crea il primo form group 
       formGroups: this.fb.array([
         
@@ -69,6 +71,8 @@ export class CataleanComponent {
     {
       formGroupstext : this.fb.array([])
     }); 
+    //this.service.sharedData.subscribe(title => this.ti)
+ 
   }
 
   invio_Catalean()  // variabile o return 
@@ -76,6 +80,7 @@ export class CataleanComponent {
     console.log( 'inviato '); 
     console.log(this.formArrayGroup.value);
     console.log(this.formArrayGrouptext.value);
+    console.log(this.Catalean_form.value); 
     this.formArrayGroup.reset
     this.controllo_click = true ; 
     //this.controllo_chiusura = true ; 
@@ -83,11 +88,13 @@ export class CataleanComponent {
     if ( this.controllo_catalean == true && this.controllo_smartCo == false)
       {
         console.log( ' invio con catalean '); 
+        this.service.modifico_dato_catalean(true);
         this.router.navigate(['/step3']);
       }
-      else if(this.controllo_catalean == true && this.controllo_smartCo == true)
+      else 
       {
-        console.log( ' non faccio nulla l invio lo fa smartco '); 
+        console.log( ' non faccio nulla l invio lo fa smartco ');
+        this.service.modifico_dato_catalean(true); 
       }
   }
 
@@ -131,6 +138,7 @@ export class CataleanComponent {
     this.formGroups.removeAt(index);// prendo il form  group con il get e lo elimino grazie all' indice add esso asegnato 
   }
 
+  
 
 }
 

@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { SmartCoComponent } from '../smart-co/smart-co.component';
 import { CataleanComponent } from '../catalean/catalean.component';
 import { Router } from '@angular/router';
+import { PassagioDatiService } from '../../service/passagio-dati.service';
 
 @Component({
   selector: 'app-secondform',
@@ -42,9 +43,8 @@ export class SecondformComponent {
     nessuno: new FormControl(false, {}),
   });
 
-  constructor( private router : Router)
+  constructor( private router : Router , private service : PassagioDatiService)
   {
-
   }
 
   ricevo_dati(value : boolean , )
@@ -52,7 +52,7 @@ export class SecondformComponent {
     this.controllo_invio_form_catalean = value; 
     
   }
-
+  
   controllo(): boolean { // controllo se il bottone puo esserte cliccato oppure no 
     if (
       this.gruppo_checkbox.value.Catalean == false && this.gruppo_checkbox.value.SmartCo == false && this.gruppo_checkbox.value.nessuno == false) 
@@ -96,6 +96,4 @@ export class SecondformComponent {
       }
   }
 
-  
-  
 }

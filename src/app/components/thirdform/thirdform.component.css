@@ -1,3 +1,18 @@
-.checkbox2{
+.label_style{
     /*padding-right: 2% ;*/
+    font-size: 13px;
+    
+}
+.form_style{
+    /*padding-right: 2% ;*/
+    font-size: 13px;
+    display:  grid;
+    grid-template-columns: repeat(4,1fr) ;
+}
+.title{
+    text-align: center;
+}
+
+.invio{
+    text-align: center;
 }

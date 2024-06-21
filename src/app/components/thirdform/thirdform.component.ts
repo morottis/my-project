@@ -10,6 +10,8 @@ import { ObjectData } from '../../object-data';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Jsonvalue } from '../../interface/jsonvalue';
 import { BrowserModule } from '@angular/platform-browser';
+import { PassagioDatiService } from '../../service/passagio-dati.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -34,11 +36,16 @@ export class ThirdformComponent implements OnInit {
   numero : string = '5% ' ;  // -6 
   string : string = '' ; 
   form_checkbox!: FormGroup;  
+  scelta_catalean : boolean = false ; 
+  scelta_smartCo : boolean = false ; 
 
-  constructor ( private http : ServizioHttpService , private fb : FormBuilder)
+  constructor ( private http : ServizioHttpService , private fb : FormBuilder , private service : PassagioDatiService)
   {
     this.dynamicForm = this.fb.group({ });
-    console.log('costruttore'); 
+    this.service.sharedData$.subscribe( data => { this.scelta_catalean = data })
+    console.log(this.scelta_catalean); 
+    this.service.sharedData_SmartCo.subscribe( data => { this.scelta_smartCo = data })
+    console.log("smartCO : " + this.scelta_smartCo); 
   }
 
 
@@ -56,7 +63,6 @@ export class ThirdformComponent implements OnInit {
      
   }
 
-  /* INIZIO */ 
   dynamicForm : FormGroup;
 
   private addControls(): void {
@@ -65,14 +71,37 @@ export class ThirdformComponent implements OnInit {
       {
         console.log(this.array_nomi_permission[i]);
         
-        this.dynamicForm.addControl(this.array_nomi_permission[i] , this.fb.control(false )); 
+        //this.dynamicForm.addControl(this.array_nomi_permission[i] , this.fb.control(false )); 
+         if( this.array_nomi_permission[i] == 'READ_MEDIA_LIBRARY' || this.array_nomi_permission[i] == 'READ_FEATURES')
+          {
+            this.dynamicForm.addControl(this.array_nomi_permission[i] , this.fb.control(true , Validators.required )); 
+          }
+          else if( this.scelta_catalean == true && (this.array_nomi_permission[i] == 'READ_PRODUCTS' || this.array_nomi_permission[i] == 'EDIT_APPLICATION_USERS'))
+          {
+            this.dynamicForm.addControl(this.array_nomi_permission[i] , this.fb.control(true , Validators.required)); 
+          }
+          else if( this.scelta_smartCo == true && (this.array_nomi_permission[i] == 'READ_COMMUNICATIONS' || this.array_nomi_permission[i] == 'READ_APPLICATION_USERS' || this.array_nomi_permission[i] == 'READ_APPLICATION_GROUPS'))
+          {
+            this.dynamicForm.addControl(this.array_nomi_permission[i] , this.fb.control(true , Validators.required)); 
+          }
+          else if( (this.scelta_smartCo == true && this.scelta_catalean == true ) && (this.array_nomi_permission[i] == 'READ_COMMUNICATIONS' || this.array_nomi_permission[i] == 'READ_APPLICATION_USERS' || this.array_nomi_permission[i] == 'READ_APPLICATION_GROUPS' || this.array_nomi_permission[i] == 'READ_PRODUCTS' || this.array_nomi_permission[i] == 'EDIT_APPLICATION_USERS'))
+          {
+              this.dynamicForm.addControl(this.array_nomi_permission[i] , this.fb.control(true , Validators.required)); 
+          }
+          else
+          {
+            this.dynamicForm.addControl(this.array_nomi_permission[i] , this.fb.control(false )); 
+          }
       }
     
   }
 
-  onSubmit(): void {
-   console.log(this.dynamicForm);  
+  invio()
+  {
+    console.log(this.dynamicForm.value);
   }
+
+
 }
 
   /*get array_form (): FormArray
