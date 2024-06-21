@@ -83,7 +83,7 @@ export class CataleanComponent {
     if ( this.controllo_catalean == true && this.controllo_smartCo == false)
       {
         console.log( ' invio con catalean '); 
-        //this.router.navigate(['/step3']);
+        this.router.navigate(['/step3']);
       }
       else if(this.controllo_catalean == true && this.controllo_smartCo == true)
       {

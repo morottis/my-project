@@ -1,12 +1,14 @@
 <p>thirdform works!</p>
-<form [formGroup]="form_checkbox">
+<form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
   <span
     *ngFor="let item of array_permission?.permissions; let i = index">
     <span >
-            <input type="checkbox"/>
+      <!--<p> {{item|json }}</p>-->
+            <input type="checkbox" [formControlName]="item.name"/>
             <label [ngStyle]="{'padding-right' : numero }">{{array_permission?.permissions[i].name}}</label>
             <span *ngIf=" (i+1) % 5 == 0 "><br></span>
         </span>
     <!--<div>{{ array_permission.permissions[i].name }}</div>-->
   </span>
+  <button type="submit" >Submit</button>
 </form>

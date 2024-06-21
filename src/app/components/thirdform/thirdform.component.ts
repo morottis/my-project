@@ -30,12 +30,15 @@ export class ThirdformComponent implements OnInit {
 
 
   array_permission : Jsonvalue | any ;
+  array_nomi_permission : Array<string>  = []; 
   numero : string = '5% ' ;  // -6 
   string : string = '' ; 
   form_checkbox!: FormGroup;  
 
   constructor ( private http : ServizioHttpService , private fb : FormBuilder)
   {
+    this.dynamicForm = this.fb.group({ });
+    console.log('costruttore'); 
   }
 
 
@@ -43,16 +46,34 @@ export class ThirdformComponent implements OnInit {
     this.http.getJson<Jsonvalue>().subscribe({ next : (data : Jsonvalue) => { // specifico con Jsonvalue che il valore e di tipo interfaccia jsonvalue
       console.log(data); 
       this.array_permission = data;
-          console.log( 'nel for'); 
-          this.string = this.array_permission.permissions[0].name
+          for (let index = 0; index < this.array_permission.permissions.length; index++) {
+            this.array_nomi_permission[index] =  this.array_permission.permissions[index].name;
+            //console.log( this.array_nomi_permission[index] ); 
+          } 
+          console.log(this.array_nomi_permission); 
+          this.addControls();   
      }}); 
-
-     this.form_checkbox = this.fb.group({ //fb.group crea il primo form group 
-      array_form: this.fb.array([
-      ])
-    }); 
-
+     
   }
+
+  /* INIZIO */ 
+  dynamicForm : FormGroup;
+
+  private addControls(): void {
+    console.log(this.array_nomi_permission.length); 
+    for( let i =0 ; i <this.array_nomi_permission.length ; i++)
+      {
+        console.log(this.array_nomi_permission[i]);
+        
+        this.dynamicForm.addControl(this.array_nomi_permission[i] , this.fb.control(false )); 
+      }
+    
+  }
+
+  onSubmit(): void {
+   console.log(this.dynamicForm);  
+  }
+}
 
   /*get array_form (): FormArray
   {
@@ -64,4 +85,4 @@ export class ThirdformComponent implements OnInit {
     console.log(this.array_form); 
   }*/
 
-}
+
