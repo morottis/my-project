@@ -90,6 +90,8 @@ export class SecondformComponent {
       }   
       else
       {
+        this.service.modifico_dato_catalean(false);
+        this.service.modifico_dato_smartco(false); 
         this.router.navigate(['/step3']);
         return this.controllo_comparsa_catalean = false  ,  this.controllo_comparsa_smartco = false; 
 

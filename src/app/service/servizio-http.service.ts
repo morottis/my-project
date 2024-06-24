@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -13,9 +13,14 @@ export class ServizioHttpService {
   {
     return this.http.get<T>(url); 
   }
+
   getJson<T>()
   {
     return this.http.get<T>('assets/JSON.JSON'); 
   }  
 
+  getPermission<T>(url : string , UUID : string)
+  {
+    return this.http.get<T>(url , { params : {  organizationUUID  : UUID}});
+  }
 }

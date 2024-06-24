@@ -1,9 +1,10 @@
 export interface Jsonvalue {
 
-    permissions : jsonarray[]
+    //permissions : jsonarray[]
     name : string
+    uuid : string
 }
 
-export interface jsonarray{
+/*export interface jsonarray{
     name : string
-}
+}*/

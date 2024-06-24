@@ -1,19 +1,30 @@
 <h1 class="title">SELEZIONA I PERMESSI</h1>
-<form [formGroup]="dynamicForm"  class="form_style">
-  <span
-    *ngFor="let item of array_permission?.permissions; let i = index">
-    <span>
-            <input type="checkbox" [formControlName]="item.name"/>
-            <label class="label_style">{{array_permission?.permissions[i].name}}</label>
-            <span *ngIf=" (i+1) % 5 == 0 "><br></span>
-    </span>
-    <!--<div>{{ array_permission.permissions[i].name }}</div>-->
-  </span>
-  <br>
-  <br>
-  <br>
-</form>
-<div class="contenitore_bottone">
-  <button type="submit"  class="invio"  [disabled]="!dynamicForm.valid" (click)="invio()" >Submit</button>
-</div>
-
+<!--<div id="form_sidebar">
+  <app-sidebar></app-sidebar>-->
+  <!--<div id="contenitore_form">-->
+    <form [formGroup]="FormCheckbox" class="form_style">
+      <span *ngFor="let item of array_permission; let i = index">
+        <span>
+          <input type="checkbox" [formControlName]="item.name" />
+          <label class="label_style">{{
+            item.name
+          }}</label>
+          <span *ngIf="(i + 1) % 5 == 0"><br /></span>
+        </span>
+      </span>
+      <br />
+      <br />
+      <br />
+    </form>
+    <div class="contenitore_bottone">
+      <button
+        type="submit"
+        class="invio"
+        [disabled]="!FormCheckbox.valid"
+        (click)="invio()"
+      >
+        Submit
+      </button>
+    </div>
+  <!--</div>->
+<!--</div>-->
