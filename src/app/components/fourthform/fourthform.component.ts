@@ -30,7 +30,7 @@ export class FourthformComponent {
   array : Array<string> | any = [] ; 
   UUID : string = '' ; 
   UUID_roles : string = ''; 
-  constructor( private http  : ServizioHttpService , private service : PassagioDatiService)
+  constructor( private http  : ServizioHttpService , private service : PassagioDatiService , private route : Router)
   {
 
     this.service.shareData_UUID.subscribe((UUID) => {
@@ -40,8 +40,6 @@ export class FourthformComponent {
 
     this.service.shareData_UUID_roles.subscribe( (UUID_roles) => { this.UUID_roles = UUID_roles})
     console.log(this.UUID_roles); 
-
-
   }
 
   form_user = new FormGroup({
@@ -60,6 +58,7 @@ export class FourthformComponent {
     //this.serve.post().subscribe( data => {})
     console.log(dati);
     this.http.post('https://user.datalean-nodejs-dev.catalean.com/user' , dati , this.UUID ).subscribe( data => { console.log(data)});  // arry d ' oggetti 
+    this.route.navigate(['/step5']); 
    
   }
 

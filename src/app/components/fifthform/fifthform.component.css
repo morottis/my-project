@@ -1,0 +1,11 @@
+
+.checkbox-container {
+    display: grid;
+    justify-content: center; /* allinia gli elementi  in un display grid */  
+    padding-top: 5%;           
+  }
+  
+  .checkbox-group {
+    display: flex;      
+    margin-bottom: 10px;       
+  }
