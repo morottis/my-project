@@ -8,6 +8,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ServizioHttpService } from '../../service/servizio-http.service';
 import { ObjectData } from '../../object-data';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { PassagioDatiService } from '../../service/passagio-dati.service';
 
 
 @Component({
@@ -37,9 +38,11 @@ export class FirtsformComponent {
   nome_db : any = ''; 
   scritta_errore : string = ''; 
 
-  constructor(private http: ServizioHttpService , private router : Router ,) {}
+  constructor(private http: ServizioHttpService , private router : Router , private passagio_dati : PassagioDatiService) {
 
-  form_nome_organizazzione = new FormGroup({
+  }
+
+  form_nome_organizazzione= new FormGroup({
     // form group
     nome: new FormControl('', { validators: [Validators.required] }),
     organizazzione: new FormControl('', { validators: [Validators.required] }),
@@ -79,10 +82,8 @@ export class FirtsformComponent {
           }
         },
       });
-      
-      
-
-      
+    
+      this.passagio_dati.dati_organizazione(this.form_nome_organizazzione.value.nome , this.form_nome_organizazzione.value.dbname , this.form_nome_organizazzione.value.organizazzione);     
   }
 
 }

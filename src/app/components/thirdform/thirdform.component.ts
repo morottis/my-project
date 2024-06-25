@@ -15,6 +15,8 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Jsonvalue } from '../../interface/jsonvalue';
 import { PassagioDatiService } from '../../service/passagio-dati.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { v4 as uuidv4 } from 'uuid'
+
 
 @Component({
   selector: 'app-thirdform',
@@ -32,6 +34,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
   templateUrl: './thirdform.component.html',
   styleUrl: './thirdform.component.css',
 })
+
 export class ThirdformComponent implements OnInit {
   array_permission: Jsonvalue | any;
   array_nomi_permission: Array<string> = [];
@@ -39,6 +42,11 @@ export class ThirdformComponent implements OnInit {
   scelta_catalean: boolean = false;
   scelta_smartCo: boolean = false;
   FormCheckbox: FormGroup;
+  dbname : string = ''; 
+  name : string = ''; 
+  prefix : string = ''; 
+  array_permission_valid :  Jsonvalue | any = [];  
+
   array_permessi_datelean: Array<string> = [
     'READ_MEDIA_LIBRARY',
     'READ_FEATURES',
@@ -86,6 +94,7 @@ export class ThirdformComponent implements OnInit {
     private router: Router
   ) {
     this.FormCheckbox = this.fb.group({});
+
     this.service.sharedData$.subscribe((data) => {
       this.scelta_catalean = data;
     });
@@ -94,6 +103,22 @@ export class ThirdformComponent implements OnInit {
       this.scelta_smartCo = data;
     });
     console.log('smartCO : ' + this.scelta_smartCo);
+    
+    this.service.sharedData_nome.subscribe((data) => {
+      console.log( data); 
+      this.name = data ; 
+    })
+
+    this.service.sharedData_prefix.subscribe((data) => {
+      console.log( data); 
+      this.prefix = data ; 
+    })
+
+    this.service.sharedData_dbname.subscribe((data) => {
+      console.log( data);
+      this.dbname = data ;  
+    })
+
   }
 
   ngOnInit(): void {
@@ -105,7 +130,7 @@ export class ThirdformComponent implements OnInit {
       .subscribe({
         next: (data: Jsonvalue) => {
           // specifico con Jsonvalue che il valore e di tipo interfaccia jsonvalue
-          //console.log(data);
+          console.log(data);
           this.array_permission = data;
           for (let index = 0; index < this.array_permission.length; index++) {
             this.array_nomi_permission[index] =
@@ -142,10 +167,7 @@ export class ThirdformComponent implements OnInit {
             );
           }
         }
-        this.FormCheckbox.addControl(
-          this.array_nomi_permission[i],
-          this.fb.control(false)
-        );
+        this.checked(i); 
       } else if (this.scelta_smartCo == true && this.scelta_catalean == null) {
         for (let y = 0; y < this.array_permessi_smartco.length; y++) {
           if (this.array_nomi_permission[i] == this.array_permessi_smartco[y]) {
@@ -156,10 +178,7 @@ export class ThirdformComponent implements OnInit {
             );
           }
         }
-        this.FormCheckbox.addControl(
-          this.array_nomi_permission[i],
-          this.fb.control(false)
-        );
+        this.checked(i); 
       } else if (this.scelta_smartCo == true && this.scelta_catalean == true) {
         for (let y = 0; y < this.array_entrambi.length; y++) {
           if (this.array_nomi_permission[i] == this.array_entrambi[y]) {
@@ -170,22 +189,61 @@ export class ThirdformComponent implements OnInit {
             );
           }
         }
-        this.FormCheckbox.addControl(
-          this.array_nomi_permission[i],
-          this.fb.control(false)
-        );
+        this.checked(i); 
       } // viene fatto se non trova nulla e mi serve per inserire le chek vuote se non entrano nel primo for
       else {
-        this.FormCheckbox.addControl(
-          this.array_nomi_permission[i],
-          this.fb.control(false)
-        );
+        this.checked(i); 
       }
     }
   }
 
   invio() {
-    console.log(this.FormCheckbox.value);
-    this.router.navigate(['/step4']);
+    let UUID = this.creazioneUUID(); 
+    console.log(UUID); 
+    console.log( this.array_permission); // sia uuid che altro 
+    this.verifica_true(); 
+
+    console.log(this.FormCheckbox.value); // fallo poi con lo switch map 
+    this.http.post('https://organization.datalean-nodejs-dev.catalean.com/organization' , { uuid : UUID ,  name : this.name , prefix :  this.prefix , dbName : this.dbname}).subscribe((data) => 
+      {
+        console.log(data); 
+        this.http.post('https://user.datalean-nodejs-dev.catalean.com/role',  { name : this.name +  '_add' , permissions :  this.array_permission_valid   } ,  UUID ).subscribe((data) => 
+          {
+            console.log(data); 
+          }
+        )
+      }
+    )
+    this.router.navigate(['/step4']); 
+    
   }
+
+  checked( i : number )
+  {
+      this.FormCheckbox.addControl(
+      this.array_nomi_permission[i],
+      this.fb.control(false)
+    );
+  }
+  
+  creazioneUUID() : string
+  {
+    return uuidv4()
+  }
+
+  verifica_true()
+  {
+    this.array_permission_valid.splice( 0 , this.array_permission_valid.length);// ripulisco l'array 
+    for( let i = 0 ; i <this.array_permission.length ; i++ )
+      {
+        if( this.FormCheckbox.get(this.array_permission[i].name)?.value == true )
+          {
+            this.array_permission_valid.push(this.array_permission[i]);
+            console.log(this.array_permission_valid);  
+          }
+      }
+  }
+
+
 }
+

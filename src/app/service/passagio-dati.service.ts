@@ -12,6 +12,16 @@ export class PassagioDatiService {
   SmartCo_Subject = new BehaviorSubject<any>(null);
   sharedData_SmartCo = this.SmartCo_Subject.asObservable();
 
+  nome_organization_Subject = new BehaviorSubject<any>(null);
+  sharedData_nome = this.nome_organization_Subject.asObservable();
+
+  prefix_organization_Subject = new BehaviorSubject<any>(null);
+  sharedData_prefix = this.prefix_organization_Subject.asObservable();
+
+  dbname_organization_Subject = new BehaviorSubject<any>(null);
+  sharedData_dbname = this.dbname_organization_Subject.asObservable();
+
+
   constructor() { }
 
   modifico_dato_catalean(data : boolean)
@@ -24,5 +34,12 @@ export class PassagioDatiService {
   {
     this.SmartCo_Subject.next(data); // invia il dato ai subscriber di shareData 
     
+  }
+
+  dati_organizazione( data : any , data2 : any , data3 : any)
+  {
+    this.nome_organization_Subject.next(data);
+    this.dbname_organization_Subject.next(data2); 
+    this.prefix_organization_Subject.next(data3);  
   }
 }

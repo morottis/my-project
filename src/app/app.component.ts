@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, RouterOutlet } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { RouterModule } from '@angular/router';
 
 import { FirtsformComponent } from './components/firtsform/firtsform.component';
@@ -17,7 +17,13 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  router = inject(Router) ;
+   
+  ngOnInit(): void {
+    this.router.navigate(['']); 
+  }
+
   title = 'my-project';
   var : string = ''
 }
