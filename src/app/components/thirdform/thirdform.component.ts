@@ -200,20 +200,24 @@ export class ThirdformComponent implements OnInit {
   invio() {
     let UUID = this.creazioneUUID(); 
     console.log(UUID); 
+    let UUID_roles =  this.creazioneUUID_roles(); 
+    console.log("roles uuid : " + UUID_roles); 
+
     console.log( this.array_permission); // sia uuid che altro 
     this.verifica_true(); 
 
     console.log(this.FormCheckbox.value); // fallo poi con lo switch map 
-    this.http.post('https://organization.datalean-nodejs-dev.catalean.com/organization' , { uuid : UUID ,  name : this.name , prefix :  this.prefix , dbName : this.dbname}).subscribe((data) => 
+    this.http.post('https://organization.datalean-nodejs-dev.catalean.com/organization' , { uuid : UUID ,  name : this.name.trimEnd().trimStart() , prefix :  this.prefix.trimEnd().trimStart() , dbName : this.dbname.trimEnd().trimStart()}).subscribe((data) => 
       {
         console.log(data); 
-        this.http.post('https://user.datalean-nodejs-dev.catalean.com/role',  { name : this.name +  '_add' , permissions :  this.array_permission_valid   } ,  UUID ).subscribe((data) => 
+        this.http.post('https://user.datalean-nodejs-dev.catalean.com/role',  { name : this.name.trimEnd().trimStart() +  '_add' , permissions :  this.array_permission_valid  , uuid : UUID_roles } ,  UUID ).subscribe((data) => 
           {
             console.log(data); 
           }
         )
       }
     )
+    this.service.dati_UUID(UUID , UUID_roles); 
     this.router.navigate(['/step4']); 
     
   }
@@ -227,6 +231,11 @@ export class ThirdformComponent implements OnInit {
   }
   
   creazioneUUID() : string
+  {
+    return uuidv4()
+  }
+  
+  creazioneUUID_roles() : string
   {
     return uuidv4()
   }

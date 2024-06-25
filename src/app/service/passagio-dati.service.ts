@@ -21,6 +21,11 @@ export class PassagioDatiService {
   dbname_organization_Subject = new BehaviorSubject<any>(null);
   sharedData_dbname = this.dbname_organization_Subject.asObservable();
 
+  UUID_Subject = new BehaviorSubject<any>(null); 
+  shareData_UUID = this.UUID_Subject.asObservable(); 
+
+  UUID_roles_Subject = new BehaviorSubject<any>(null); 
+  shareData_UUID_roles = this.UUID_roles_Subject.asObservable(); 
 
   constructor() { }
 
@@ -42,4 +47,11 @@ export class PassagioDatiService {
     this.dbname_organization_Subject.next(data2); 
     this.prefix_organization_Subject.next(data3);  
   }
+
+  dati_UUID( UUID : any , UUID_roles : any  )
+  {
+    this.UUID_Subject.next(UUID); 
+    this.UUID_roles_Subject.next(UUID_roles); 
+  }
+  
 }

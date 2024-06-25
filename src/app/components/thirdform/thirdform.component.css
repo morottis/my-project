@@ -21,6 +21,7 @@
 {
     text-align: center;
 }
+
 #contenitore_form
 {
   margin-right: 23%;
@@ -29,6 +30,7 @@
   justify-items: center;
   
 }
+
 #form_sidebar{
   justify-content: space-between;
   display: flex;

@@ -16,12 +16,10 @@ export class SidebarComponent {
   {
     if( this.click_side == true)
     {
-      console.log(" nel if")
       this.click_side = false 
     }
     else
     {
-      console.log(" nel else")
       this.click_side = true
     }
   }

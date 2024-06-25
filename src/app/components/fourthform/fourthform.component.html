@@ -1,0 +1,26 @@
+<h1 id="title">Inserisci nome e prefisso organizzazione</h1>
+<div id="form_sidebar">
+  <app-sidebar></app-sidebar>
+  <div id="contenitore_form">
+    <form
+      class="form"
+      [formGroup]="form_user"
+      (submit)="Invio_dati()">
+      <div>
+        <mat-form-field  class="form">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="mail" />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="form">
+          <mat-label>password</mat-label>
+          <input matInput formControlName="password"/>
+        </mat-form-field>
+      </div>
+      <button type="submit" [disabled]="!form_user.valid">
+        INVIA
+      </button>
+    </form>
+  </div>
+</div>
