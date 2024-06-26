@@ -29,7 +29,7 @@ export class FourthformComponent {
 
   array : Array<string> | any = [] ; 
   UUID : string = '' ; 
-  UUID_roles : string = ''; 
+  UUIDRoles : string = ''; 
   constructor( private http  : ServizioHttpService , private service : PassagioDatiService , private route : Router)
   {
 
@@ -38,8 +38,8 @@ export class FourthformComponent {
     });
     console.log(this.UUID); 
 
-    this.service.shareDataUUIDRoles.subscribe( (UUID_roles) => { this.UUID_roles = UUID_roles})
-    console.log(this.UUID_roles); 
+    this.service.shareDataUUIDRoles.subscribe( (UUID_roles) => { this.UUIDRoles = UUID_roles})
+    console.log(this.UUIDRoles); 
   }
 
   form_user = new FormGroup({
@@ -54,7 +54,7 @@ export class FourthformComponent {
     console.log(this.array); 
     let dati = { 
       email : this.form_user.value.mail?.trimEnd().trimStart()  , password : this.form_user.value.password?.trimEnd().trimStart() , firstName : this.array[0]?.trimEnd().trimStart() 
-     , lastName : this.array[1]?.trimEnd().trimStart() , username : this.form_user.value.mail?.trimEnd().trimStart() ,  roles : [{ uuid : this.UUID_roles}]}
+     , lastName : this.array[1]?.trimEnd().trimStart() , username : this.form_user.value.mail?.trimEnd().trimStart() ,  roles : [{ uuid : this.UUIDRoles}]}
     //this.serve.post().subscribe( data => {})
     console.log(dati);
     this.http.post('https://user.datalean-nodejs-dev.catalean.com/user' , dati , this.UUID ).subscribe( data => { console.log(data)});  // arry d ' oggetti 
