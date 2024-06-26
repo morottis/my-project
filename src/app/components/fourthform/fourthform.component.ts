@@ -33,12 +33,12 @@ export class FourthformComponent {
   constructor( private http  : ServizioHttpService , private service : PassagioDatiService , private route : Router)
   {
 
-    this.service.shareData_UUID.subscribe((UUID) => {
+    this.service.shareDataUUID.subscribe((UUID) => {
       this.UUID = UUID;
     });
     console.log(this.UUID); 
 
-    this.service.shareData_UUID_roles.subscribe( (UUID_roles) => { this.UUID_roles = UUID_roles})
+    this.service.shareDataUUIDRoles.subscribe( (UUID_roles) => { this.UUID_roles = UUID_roles})
     console.log(this.UUID_roles); 
   }
 

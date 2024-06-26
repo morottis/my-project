@@ -2,56 +2,48 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PassagioDatiService {
+  CataleanSubject = new BehaviorSubject<any>(null);
+  sharedData$ = this.CataleanSubject.asObservable(); // emette i valori da sharedDataSubject
 
-  Catalean_Subject = new BehaviorSubject<any>(null);
-  sharedData$ = this.Catalean_Subject.asObservable(); // emette i valori da sharedDataSubject 
+  SmartCoSubject = new BehaviorSubject<any>(null);
+  sharedDataSmartCo = this.SmartCoSubject.asObservable();
 
-  SmartCo_Subject = new BehaviorSubject<any>(null);
-  sharedData_SmartCo = this.SmartCo_Subject.asObservable();
+  nomeOrganizationSubject = new BehaviorSubject<any>(null);
+  sharedDataNome = this.nomeOrganizationSubject.asObservable();
 
-  nome_organization_Subject = new BehaviorSubject<any>(null);
-  sharedData_nome = this.nome_organization_Subject.asObservable();
+  prefixOrganizationSubject = new BehaviorSubject<any>(null);
+  sharedDataPrefix = this.prefixOrganizationSubject.asObservable();
 
-  prefix_organization_Subject = new BehaviorSubject<any>(null);
-  sharedData_prefix = this.prefix_organization_Subject.asObservable();
+  dbnameOrganizationSubject = new BehaviorSubject<any>(null);
+  sharedDataDbname = this.dbnameOrganizationSubject.asObservable();
 
-  dbname_organization_Subject = new BehaviorSubject<any>(null);
-  sharedData_dbname = this.dbname_organization_Subject.asObservable();
+  UUIDSubject = new BehaviorSubject<any>(null);
+  shareDataUUID = this.UUIDSubject.asObservable();
 
-  UUID_Subject = new BehaviorSubject<any>(null); 
-  shareData_UUID = this.UUID_Subject.asObservable(); 
+  UUIDRolesSubject = new BehaviorSubject<any>(null);
+  shareDataUUIDRoles = this.UUIDRolesSubject.asObservable();
 
-  UUID_roles_Subject = new BehaviorSubject<any>(null); 
-  shareData_UUID_roles = this.UUID_roles_Subject.asObservable(); 
+  constructor() {}
 
-  constructor() { }
-
-  modifico_dato_catalean(data : boolean)
-  {
-    this.Catalean_Subject.next(data); // invia il dato ai subscriber di shareData 
-    
+  modificoDatoCatalean(data: boolean) {
+    this.CataleanSubject.next(data); // invia il dato ai subscriber di shareData
   }
 
-  modifico_dato_smartco(data : boolean)
-  {
-    this.SmartCo_Subject.next(data); // invia il dato ai subscriber di shareData 
-    
+  modificoDatoSmartco(data: boolean) {
+    this.SmartCoSubject.next(data); // invia il dato ai subscriber di shareData
   }
 
-  dati_organizazione( data : any , data2 : any , data3 : any)
-  {
-    this.nome_organization_Subject.next(data);
-    this.dbname_organization_Subject.next(data2); 
-    this.prefix_organization_Subject.next(data3);  
+  datiOrganizazione(data: any, data2: any, data3: any) {
+    this.nomeOrganizationSubject.next(data);
+    this.dbnameOrganizationSubject.next(data2);
+    this.prefixOrganizationSubject.next(data3);
   }
 
-  dati_UUID( UUID : any , UUID_roles : any  )
-  {
-    this.UUID_Subject.next(UUID); 
-    this.UUID_roles_Subject.next(UUID_roles); 
+  datiUUID(UUID: any, UUIDRoles: any) {
+    this.UUIDSubject.next(UUID);
+    this.UUIDRolesSubject.next(UUIDRoles);
   }
-  
 }

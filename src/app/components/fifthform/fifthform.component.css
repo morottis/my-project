@@ -1,4 +1,6 @@
-
+.title{
+  text-align: center;
+}
 .checkbox-container {
     display: grid;
     justify-content: center; /* allinia gli elementi  in un display grid */  

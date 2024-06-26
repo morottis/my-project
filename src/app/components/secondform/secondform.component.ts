@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, Route } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar.component';
-import {FormControl,FormGroup,ReactiveFormsModule,Validators,} from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -23,79 +28,80 @@ import { PassagioDatiService } from '../../service/passagio-dati.service';
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
-    SmartCoComponent, 
-    CataleanComponent
+    SmartCoComponent,
+    CataleanComponent,
   ],
   templateUrl: './secondform.component.html',
   styleUrl: './secondform.component.css',
 })
 export class SecondformComponent {
-  controllo_comparsa_smartco: boolean = false; // utilizzo per i controlli di visualizzazione successiva dei form 
-  controllo_comparsa_catalean : boolean = false ; 
-  controllo_comparsa_entrambi : boolean = false ;  
+  controlloComparsaSmartco: boolean = false; // utilizzo per i controlli di visualizzazione successiva dei form
+  controlloComparsaCatalean: boolean = false;
+  controlloComparsaEntrambi: boolean = false;
 
-  controllo_invio_form_catalean : boolean = false; 
-  controllo_scomparsa_catalean : boolean = true ; 
+  controlloInvioFormCatalean: boolean = false;
+  controlloScomparsaCatalean: boolean = true;
 
-  gruppo_checkbox = new FormGroup({
+  gruppoCheckbox = new FormGroup({
     SmartCo: new FormControl(false, {}),
     Catalean: new FormControl(false, {}),
     nessuno: new FormControl(false, {}),
   });
 
-  constructor( private router : Router , private service : PassagioDatiService)
-  {
+  constructor(private router: Router, private service: PassagioDatiService) {}
+
+  ricevoDati(value: boolean) {
+    this.controlloInvioFormCatalean = value;
   }
 
-  ricevo_dati(value : boolean , )
-  {
-    this.controllo_invio_form_catalean = value; 
-    
-  }
-  
-  controllo(): boolean { // controllo se il bottone puo esserte cliccato oppure no 
+  controllo(): boolean {
+    // controllo se il bottone puo esserte cliccato oppure no
     if (
-      this.gruppo_checkbox.value.Catalean == false && this.gruppo_checkbox.value.SmartCo == false && this.gruppo_checkbox.value.nessuno == false) 
-      {
+      this.gruppoCheckbox.value.Catalean == false &&
+      this.gruppoCheckbox.value.SmartCo == false &&
+      this.gruppoCheckbox.value.nessuno == false
+    ) {
       return true;
-    } 
-    else 
-    {
-      if((this.gruppo_checkbox.value.Catalean == true || this.gruppo_checkbox.value.SmartCo == true ) && this.gruppo_checkbox.value.nessuno == true)
-      {
-        return true
-      }
-      else
-      {
+    } else {
+      if (
+        (this.gruppoCheckbox.value.Catalean == true ||
+          this.gruppoCheckbox.value.SmartCo == true) &&
+        this.gruppoCheckbox.value.nessuno == true
+      ) {
+        return true;
+      } else {
         return false;
       }
     }
   }
-  
+
   invio(): boolean {
-    if(this.gruppo_checkbox.value.SmartCo == true)
-      {
-        if(this.gruppo_checkbox.value.Catalean == true)
-          {
-            return this.controllo_comparsa_entrambi = true  , this.controllo_comparsa_catalean = false  ,  this.controllo_comparsa_smartco = false;
-          }
-          else
-          {
-            return this.controllo_comparsa_smartco = true , this.controllo_comparsa_catalean = false ;
-          }
+    if (this.gruppoCheckbox.value.SmartCo == true) {
+      if (this.gruppoCheckbox.value.Catalean == true) {
+        return (
+          (this.controlloComparsaEntrambi = true),
+          (this.controlloComparsaCatalean = false),
+          (this.controlloComparsaSmartco = false)
+        );
+      } else {
+        return (
+          (this.controlloComparsaSmartco = true),
+          (this.controlloComparsaCatalean = false)
+        );
       }
-      else if(this.gruppo_checkbox.value.Catalean == true)
-      {
-        return this.controllo_comparsa_catalean = true , this.controllo_comparsa_smartco = false; 
-      }   
-      else
-      {
-        this.service.modifico_dato_catalean(false);
-        this.service.modifico_dato_smartco(false); 
-        this.router.navigate(['/step3']);
-        return this.controllo_comparsa_catalean = false  ,  this.controllo_comparsa_smartco = false; 
-
-      }
+    } else if (this.gruppoCheckbox.value.Catalean == true) {
+      return (
+        (this.controlloComparsaCatalean = true),
+        (this.controlloComparsaSmartco = false)
+      );
+    } else {
+      this.service.modificoDatoCatalean(false);
+      this.service.modificoDatoSmartco(false);
+      this.router.navigate(['/step3']);
+      return (
+        (this.controlloComparsaCatalean = false),
+        (this.controlloComparsaSmartco = false)
+      );
+    }
   }
-
 }

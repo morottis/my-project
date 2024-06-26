@@ -82,13 +82,13 @@ export class CataleanComponent {
     if ( this.controllo_catalean == true && this.controllo_smartCo == false)
       {
         console.log( ' invio con catalean '); 
-        this.service.modifico_dato_catalean(true);
+        this.service.modificoDatoCatalean(true);
         this.router.navigate(['/step3']);
       }
       else 
       {
         console.log( ' non faccio nulla l invio lo fa smartco ');
-        this.service.modifico_dato_catalean(true); 
+        this.service.modificoDatoCatalean(true); 
       }
   }
 

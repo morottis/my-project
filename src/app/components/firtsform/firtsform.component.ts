@@ -35,14 +35,14 @@ export class FirtsformComponent {
   nomeOrganizzazione: any = '';
   prefix : any = ''; 
   verifica: boolean = true;
-  nome_db : any = ''; 
-  scritta_errore : string = ''; 
+  nomeDb : any = ''; 
+  scrittaErrore : string = ''; 
 
   constructor(private http: ServizioHttpService , private router : Router , private passagio_dati : PassagioDatiService) {
 
   }
 
-  form_nome_organizazzione= new FormGroup({
+  formNomeOrganizazzione= new FormGroup({
     // form group
     nome: new FormControl('', { validators: [Validators.required] }),
     organizazzione: new FormControl('', { validators: [Validators.required] }),
@@ -50,11 +50,11 @@ export class FirtsformComponent {
   });
 
   Invio_dati() {
-    this.prefix = this.form_nome_organizazzione.value.organizazzione?.trimEnd().trimStart();
-    this.nome_db = this.form_nome_organizazzione.value.dbname?.trimEnd().trimStart(); 
+    this.prefix = this.formNomeOrganizazzione.value.organizazzione?.trimEnd().trimStart();
+    this.nomeDb = this.formNomeOrganizazzione.value.dbname?.trimEnd().trimStart(); 
     console.log(this.nomeOrganizzazione);
     //this.form_nome_organizazzione.reset();
-    this.http.prendo_valore<ObjectData[]>(
+    this.http.prendoValore<ObjectData[]>(
         'https://organization.datalean-nodejs-dev.catalean.com/organization'
       )
       .subscribe({
@@ -64,14 +64,14 @@ export class FirtsformComponent {
           for (let i = 0; i < this.array.length; i++) {
             if (this.prefix == this.array[i].prefix) {
               console.log(' prefisso gia presente ');
-              this.scritta_errore = 'prefisso errato'; 
+              this.scrittaErrore = 'prefisso errato'; 
               this.verifica = false;
               break; 
             } else {
-              if(this.nome_db == this.array[i].dbname)
+              if(this.nomeDb == this.array[i].dbname)
                 {
                   console.log("nomedb presente "); 
-                  this.scritta_errore = 'nomedb errato '; 
+                  this.scrittaErrore = 'nomedb errato '; 
                   this.verifica = false ; 
                   break; 
                 }
@@ -83,7 +83,7 @@ export class FirtsformComponent {
         },
       });
     
-      this.passagio_dati.dati_organizazione(this.form_nome_organizazzione.value.nome , this.form_nome_organizazzione.value.dbname , this.form_nome_organizazzione.value.organizazzione);     
+      this.passagio_dati.datiOrganizazione(this.formNomeOrganizazzione.value.nome , this.formNomeOrganizazzione.value.dbname , this.formNomeOrganizazzione.value.organizazzione);     
   }
 
 }

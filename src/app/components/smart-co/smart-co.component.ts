@@ -75,7 +75,7 @@ export class SmartCoComponent {
     console.log(this.SmartCo_form); 
     console.log(this.formArrayGroup.value);
     this.formArrayGroup.reset
-    this.service.modifico_dato_smartco(true); 
+    this.service.modificoDatoSmartco(true); 
     this.router.navigate(['/step3']);
   }
 }

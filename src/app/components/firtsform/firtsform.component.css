@@ -1,23 +1,18 @@
 .form{
-  text-align: center;
-  padding-top: 20px;
-  display: inline; 
-  justify-content: center;
+padding: 50px;
+display: inline-block;
 }
 #title{
   padding-top: 30px;
   text-align: center;
-
 }
-#contenitore_form
-{
-  margin-right: 44.5%;
-  display: flex;
-  align-items: center; 
-  justify-items: center;
-  
+.bottone{
+  display: block;
+  text-align: center;
 }
 #form_sidebar{
-  justify-content: space-between;
-  display: flex;
+  margin-top: 70px;
+  display: block;
+  text-align: center;
+ /* background-color: red;*/
 }

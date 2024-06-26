@@ -9,18 +9,18 @@ import { CommonModule} from '@angular/common';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  array_side_bar :Array <string> =['STEP 1' , 'STEP 2' , 'STEP 3'];  
-  click_side : boolean = false ; 
+  arraySideBar :Array <string> =['STEP 1' , 'STEP 2' , 'STEP 3'];  
+  clickSide : boolean = false ; 
 
-  side_bar()
+  sideBar()
   {
-    if( this.click_side == true)
+    if( this.clickSide == true)
     {
-      this.click_side = false 
+      this.clickSide = false 
     }
     else
     {
-      this.click_side = true
+      this.clickSide = true
     }
   }
 }

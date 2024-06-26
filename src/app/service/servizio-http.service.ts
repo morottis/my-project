@@ -10,7 +10,7 @@ export class ServizioHttpService {
  
   constructor(private http : HttpClient) { }
 
-  prendo_valore<T>(url : string )
+  prendoValore<T>(url : string )
   {
     return this.http.get<T>(url); 
   }

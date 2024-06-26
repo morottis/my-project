@@ -1,34 +1,58 @@
-<form
-  class="checkbox-container"
-  [formGroup]="gruppo_checkbox_lingue"
-  (submit)="invio()"
->
-  <div class="checkbox-group">
-    <input type="checkbox" formControlName="italiano" />
-    <label>Italiano</label>
-  </div>
-  <br />
-  <div class="checkbox-group">
-    <input type="checkbox" formControlName="inglese" />
-    <label>Inglese</label>
-  </div>
-  <br />
-  <div class="checkbox-group">
-    <input type="checkbox" formControlName="spagnolo" />
-    <label>Spagnolo</label>
-  </div>
-  <br />
-  <div class="checkbox-group">
-    <input type="checkbox" formControlName="tedesco" />
-    <label>Tedesco</label>
-  </div>
-  <br />
-  <div class="checkbox-group">
-    <input type="checkbox" formControlName="francese" />
-    <label>Francese</label>
-  </div>
-  <br />
-  <button type="submit" [disabled]="!gruppo_checkbox_lingue.valid">
-    INVIA
-  </button>
-</form>
+<span *ngIf="cambioPagina === false">
+  <h1 class="title">
+    SELEZIONA LE LINGUE ALL 'INVIO TI VERRA CHIESTA LA LINGUA DI DEFAULT
+  </h1>
+  <form
+    class="checkbox-container"
+    [formGroup]="gruppo_checkbox_lingue"
+    (submit)="invio()"
+  >
+    <div class="checkbox-group">
+      <input type="checkbox" formControlName="it_IT" />
+      <label>Italiano</label>
+    </div>
+    <br />
+    <div class="checkbox-group">
+      <input type="checkbox" formControlName="en_US" />
+      <label>Inglese</label>
+    </div>
+    <br />
+    <div class="checkbox-group">
+      <input type="checkbox" formControlName="es_ES" />
+      <label>Spagnolo</label>
+    </div>
+    <br />
+    <div class="checkbox-group">
+      <input type="checkbox" formControlName="de_DE" />
+      <label>Tedesco</label>
+    </div>
+    <br />
+    <div class="checkbox-group">
+      <input type="checkbox" formControlName="fr_FR" />
+      <label>Francese</label>
+    </div>
+    <br />
+    <button type="submit" [disabled]="!gruppo_checkbox_lingue.valid">
+      INVIA
+    </button>
+  </form>
+</span>
+<span *ngIf="cambioPagina === true">
+  <h1 class="title">SELEZIONA LA LINGUA DI DEFAULT</h1>
+
+  <form [formGroup]="gruppoLingueDefault" class="checkbox-container" (submit)="invioDefault()">
+    <mat-radio-group formControlName="default">
+      <mat-radio-button value="it_IT">Italiano</mat-radio-button>
+      <br>
+      <mat-radio-button value="fr_FR">Francese</mat-radio-button>
+      <br>
+      <mat-radio-button value="es_ES">Spagnolo</mat-radio-button>
+      <br>
+      <mat-radio-button value="de_DE">Tedesco</mat-radio-button>
+      <br>
+      <mat-radio-button value="en_US">Inglese</mat-radio-button>
+      <br>
+    </mat-radio-group>
+    <button type="submit" [disabled]="!gruppoLingueDefault.valid">INVIA</button>
+  </form>
+</span>

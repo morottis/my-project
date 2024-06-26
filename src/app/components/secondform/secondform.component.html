@@ -1,8 +1,8 @@
 <h1 class="title">SCEGLI LA TUA INTEGRAZIONE</h1>
-<div class="form_sidebar">
-  <app-sidebar></app-sidebar>
+<!--<div class="form_sidebar">-->
+ <!-- <app-sidebar></app-sidebar> --> 
   <div class="solo_form">
-    <form class="check_form" [formGroup]="gruppo_checkbox" (submit)="invio()">
+    <form class="check_form" [formGroup]="gruppoCheckbox" (submit)="invio()">
       <input type="checkbox" formControlName="SmartCo" />
       <label>SmartCo</label>
       <br />
@@ -15,20 +15,20 @@
       <button type="submit" [disabled]="controllo()">INVIA</button>
     </form>
   </div>
-</div>
+<!--</div>-->
 
-<div class="integration_form" *ngIf="this.gruppo_checkbox.value.SmartCo == true && controllo_comparsa_smartco == true"><app-smart-co></app-smart-co></div>
+<div class="integration_form" *ngIf="this.gruppoCheckbox.value.SmartCo == true && controlloComparsaSmartco == true"><app-smart-co></app-smart-co></div>
 
-<div *ngIf="this.gruppo_checkbox.value.Catalean == true && controllo_comparsa_catalean == true" class="integration_form"><app-catalean [controllo_catalean]="controllo_comparsa_catalean" [controllo_smartCo]="controllo_comparsa_smartco"></app-catalean></div>
+<div *ngIf="this.gruppoCheckbox.value.Catalean == true && controlloComparsaCatalean == true" class="integration_form"><app-catalean [controllo_catalean]="controlloComparsaCatalean" [controllo_smartCo]="controlloComparsaSmartco"></app-catalean></div>
 
 <div
   *ngIf="
-    this.gruppo_checkbox.value.SmartCo == true &&
-    this.gruppo_checkbox.value.Catalean == true &&
-    controllo_comparsa_entrambi == true
+    this.gruppoCheckbox.value.SmartCo == true &&
+    this.gruppoCheckbox.value.Catalean == true &&
+    this.controlloComparsaEntrambi == true
   "
   class="integration_form"
 >
-  <app-catalean (evento)="ricevo_dati($event)" [controllo_catalean]="controllo_comparsa_catalean" [controllo_smartCo]="controllo_comparsa_smartco"></app-catalean>
-  <app-smart-co *ngIf="controllo_invio_form_catalean == true"></app-smart-co>
+  <app-catalean (evento)="ricevoDati($event)" [controllo_catalean]="controlloComparsaCatalean" [controllo_smartCo]="controlloComparsaSmartco"></app-catalean>
+  <app-smart-co *ngIf="controlloInvioFormCatalean == true"></app-smart-co>
 </div>

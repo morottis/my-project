@@ -3,7 +3,7 @@
   <app-sidebar></app-sidebar>-->
   <!--<div id="contenitore_form">-->
     <form [formGroup]="FormCheckbox" class="form_style">
-      <span *ngFor="let item of array_permission; let i = index">
+      <span *ngFor="let item of arrayPermission; let i = index">
         <span>
           <input type="checkbox" [formControlName]="item.name" />
           <label class="label_style">{{
