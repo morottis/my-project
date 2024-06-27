@@ -1,5 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
-import {FormControl,FormGroup,ReactiveFormsModule,Validators} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -33,48 +33,49 @@ import { PassagioDatiService } from '../../service/passagio-dati.service';
 export class FirtsformComponent {
   array: ObjectData[] = [];
   nomeOrganizzazione: any = '';
-  prefix : any = ''; 
+  prefix: any = '';
   verifica: boolean = true;
-  nomeDb : any = ''; 
-  scrittaErrore : string = ''; 
+  nomeDb: any = '';
+  scrittaErrore: string = '';
 
-  constructor(private http: ServizioHttpService , private router : Router , private passagio_dati : PassagioDatiService) {
+  constructor(private http: ServizioHttpService, private router: Router, private passagio_dati: PassagioDatiService) {
 
   }
 
-  formNomeOrganizazzione= new FormGroup({
+  formNomeOrganizazzione = new FormGroup({
     // form group
     nome: new FormControl('', { validators: [Validators.required] }),
     organizazzione: new FormControl('', { validators: [Validators.required] }),
-    dbname : new FormControl('', { validators: [Validators.required] }),
+    dbname: new FormControl('', { validators: [Validators.required] }),
   });
 
   Invio_dati() {
     this.prefix = this.formNomeOrganizazzione.value.organizazzione?.trimEnd().trimStart();
-    this.nomeDb = this.formNomeOrganizazzione.value.dbname?.trimEnd().trimStart(); 
+    this.nomeDb = this.formNomeOrganizazzione.value.dbname?.trimEnd().trimStart();
     console.log(this.nomeOrganizzazione);
-    //this.form_nome_organizazzione.reset();
     this.http.prendoValore<ObjectData[]>(
-        'https://organization.datalean-nodejs-dev.catalean.com/organization'
-      )
+      'https://organization.datalean-nodejs-dev.catalean.com/organization'
+    )
       .subscribe({
         next: (data) => {
           console.log(data);
           this.array = data;
+          console.log(this.prefix);
+          console.log(this.array.length);
           for (let i = 0; i < this.array.length; i++) {
-            if (this.prefix == this.array[i].prefix) {
+            console.log(this.array[i].prefix);
+            if (this.prefix === this.array[i].prefix) {
               console.log(' prefisso gia presente ');
-              this.scrittaErrore = 'prefisso errato'; 
+              this.scrittaErrore = 'prefisso errato';
               this.verifica = false;
-              break; 
-            } else {
-              if(this.nomeDb == this.array[i].dbname)
-                {
-                  console.log("nomedb presente "); 
-                  this.scrittaErrore = 'nomedb errato '; 
-                  this.verifica = false ; 
-                  break; 
-                }
+              break;
+            } else if (this.nomeDb === this.array[i].dbname) {
+              console.log("nomedb presente ");
+              this.scrittaErrore = 'nomedb errato ';
+              this.verifica = false;
+              break;
+            } else if (i === this.array.length && this.nomeDb != this.array[i].dbname && this.prefix != this.array[i].prefix) {
+              this.passagio_dati.datiOrganizazione(this.formNomeOrganizazzione.value.nome, this.formNomeOrganizazzione.value.dbname, this.formNomeOrganizazzione.value.organizazzione);
               console.log(' prefisso non presente  o nomedb non presente ');
               this.verifica = true;
               this.router.navigate(['/step2']);
@@ -82,8 +83,7 @@ export class FirtsformComponent {
           }
         },
       });
-    
-      this.passagio_dati.datiOrganizazione(this.formNomeOrganizazzione.value.nome , this.formNomeOrganizazzione.value.dbname , this.formNomeOrganizazzione.value.organizazzione);     
+
   }
 
 }

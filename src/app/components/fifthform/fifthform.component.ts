@@ -32,6 +32,7 @@ export class FifthformComponent {
   )
   array_controllo : Array<string> = ['it_IT' , 'en_US' , 'es_ES' , 'de_DE' , 'fr_FR'];
   array_value_true : Array<string> = []; 
+  contollo : boolean = false ; 
   UUID : any; 
   cambioPagina : boolean ; 
 
@@ -50,8 +51,14 @@ export class FifthformComponent {
   invioDefault()
   {
     console.log(this.gruppoLingueDefault.value);
-    this.config.createConfig({key :  'defaultLocale' , type : 'string'  , sensitive : false  , value : this.gruppoLingueDefault.value }).subscribe ( { next  :  data =>  { console.log(data)}})
-    this.route.navigate(['/']); 
+    this.config.createConfig({key :  'defaultLocale' , type : 'string'  , sensitive : false  , value : this.gruppoLingueDefault.value }).subscribe ( { next  :  data =>  { 
+      console.log(data) 
+      if( data === null )
+        {
+          this.contollo = true ; 
+        }
+      }})
+    
   }
 
   

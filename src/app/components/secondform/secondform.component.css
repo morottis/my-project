@@ -1,6 +1,7 @@
 .check_form{
     text-align: center;
     line-height: 2;
+    font-size: 23px;
 }
 .title{
     padding-top: 30px;
@@ -11,12 +12,8 @@
   margin-top: 40px;
   display: block;
   text-align: center;
-  font-size: 25px;
+  
 }
-/*.form_sidebar{
-  justify-content: space-between;
-  display: flex;
-}*/
 .integration_form{
 
   margin-top:3%;
