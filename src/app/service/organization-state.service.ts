@@ -133,69 +133,56 @@ export class OrganizationState {
           dbName: this.nameDbOrganization,
         })
         .pipe(
-          first(),
           switchMap((e) => {
             console.log(e);
-            return this.http
-              .createEntity(
-                environment.rolesUrl,
-                {
-                  name: this.nameOrganization + '_add',
-                  permissions: this.permissions,
-                  uuid: this.roleUUID,
-                },
-                this.organizationUUID
-              )
-              .pipe(
-                first(),
-                switchMap((e) => {
-                  console.warn(e);
-                  return this.http
-                    .createEntity(
-                      environment.usersUrl,
-                      {
-                        email: this.emailUser?.trim(),
-                        password: this.passwordUser?.trim(),
-                        firstName: this.firstNameUser?.trim(),
-                        lastName: this.lastNameUser?.trim(),
-                        username: this.emailUser,
-                        roles: [{ uuid: this.roleUUID }],
-                      },
-                      this.organizationUUID
-                    )
-                    .pipe(
-                      first(),
-                      switchMap((e) => {
-                        console.warn(e);
-                        return this.configuration
-                          .createConfig(
-                            {
-                              value: this.arrayLingueSelezionate,
-                              sensitive: false,
-                              key: 'activeLocales',
-                              type: 'array',
-                            },
-                            this.organizationUUID
-                          )
-                          .pipe(
-                            first(),
-                            switchMap((e) => {
-                              console.warn(e);
-                              return this.configuration.createConfig(
-                                {
-                                  key: 'defaultLocale',
-                                  type: 'string',
-                                  sensitive: false,
-                                  value: this.linguaDefault,
-                                },
-                                this.organizationUUID
-                              );
-                            })
-                          );
-                      })
-                    );
-                })
-              );
+            return this.http.createEntity(
+              environment.rolesUrl,
+              {
+                name: this.nameOrganization + '_add',
+                permissions: this.permissions,
+                uuid: this.roleUUID,
+              },
+              this.organizationUUID
+            );
+          }),
+          switchMap((e) => {
+            console.warn(e);
+            return this.http.createEntity(
+              environment.usersUrl,
+              {
+                email: this.emailUser?.trim(),
+                password: this.passwordUser?.trim(),
+                firstName: this.firstNameUser?.trim(),
+                lastName: this.lastNameUser?.trim(),
+                username: this.emailUser,
+                roles: [{ uuid: this.roleUUID }],
+              },
+              this.organizationUUID
+            );
+          }),
+          switchMap((e) => {
+            console.warn(e);
+            return this.configuration.createConfig(
+              {
+                value: this.arrayLingueSelezionate,
+                sensitive: false,
+                key: 'activeLocales',
+                type: 'array',
+              },
+              this.organizationUUID
+            );
+          }),
+          switchMap((e) => {
+            console.warn(e);
+            return this.configuration.createConfig(
+              {
+                key: 'defaultLocale',
+                type: 'string',
+                sensitive: false,
+                value: this.linguaDefault,
+              },
+              this.organizationUUID
+            );
           })
         )
         .subscribe((data) => {
