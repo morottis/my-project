@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ServizioHttpService } from './servizio-http.service';
 import { OrganizationState } from './organization-state.service';
 import { of } from 'rxjs';
+import { environment } from '../../environment';
 
 interface Config {
   value: string | boolean | Array<string> | Record<string, unknown>;
@@ -23,8 +24,8 @@ export class ConfigurationService {
     const UUID = this.passagioDatiService.UUIDSubject.value;
 
     if (UUID) {
-      return this.http.post(
-        'https://configuration.datalean-nodejs-dev.catalean.com/config',
+      return this.http.createEntity(
+        environment.configurationUrl,
         config,
         UUID
       );

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 import {
   FormArray,
   FormBuilder,
@@ -21,7 +20,6 @@ import { OrganizationState } from '../../service/organization-state.service';
   imports: [
     RouterLink,
     RouterOutlet,
-    SidebarComponent,
     ReactiveFormsModule,
     CommonModule,
     MatSelectModule,

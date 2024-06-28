@@ -1,6 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { RouterOutlet, RouterLink, Router } from '@angular/router';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 import {
   FormControl,
   FormGroup,
@@ -21,7 +20,6 @@ import { OrganizationState } from '../../service/organization-state.service';
   imports: [
     RouterLink,
     RouterOutlet,
-    SidebarComponent,
     ReactiveFormsModule,
     CommonModule,
     MatSelectModule,

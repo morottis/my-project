@@ -45,12 +45,12 @@ export class FifthformComponent {
   invio()
   {
     this.array_value_true = this.array_controllo.filter(item => this.gruppo_checkbox_lingue.get(item)?.value === true);
-    this.config.createConfig({ value : this.array_value_true  , sensitive : false  , key : 'activeLocales'  , type : 'array' }).subscribe({ next : data  => { console.log( data )}}); // key :  defaultLocale , type : string  , sentive false  , value : form value 
+    /*this.config.createConfig({ value : this.array_value_true  , sensitive : false  , key : 'activeLocales'  , type : 'array' }).subscribe({ next : data  => { console.log( data )}}); // key :  defaultLocale , type : string  , sentive false  , value : form value */
     this.cambioPagina = true 
   }
   invioDefault()
   {
-    console.log(this.gruppoLingueDefault.value);
+    /*console.log(this.gruppoLingueDefault.value);
     this.config.createConfig({key :  'defaultLocale' , type : 'string'  , sensitive : false  , value : this.gruppoLingueDefault.value }).subscribe ( { next  :  data =>  { 
       console.log(data) 
       if( data === null )
@@ -58,8 +58,8 @@ export class FifthformComponent {
           this.contollo = true ; 
         }
         this.route.navigate(['/']); 
-      }})
-    
+      }})*/
+      this.organizationUUID.sendData(); 
   }
 
   

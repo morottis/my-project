@@ -1,4 +1,4 @@
-export interface Jsonvalue {
+export interface BaseEntity {
 
     //permissions : jsonarray[]
     name : string

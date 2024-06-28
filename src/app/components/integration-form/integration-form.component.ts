@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck, OnChanges, SimpleChanges } from '@angular/core';
 import { RouterOutlet, RouterLink, Route } from '@angular/router';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 import {
   FormControl,
   FormGroup,
@@ -22,7 +21,6 @@ import { OrganizationState } from '../../service/organization-state.service';
   imports: [
     RouterLink,
     RouterOutlet,
-    SidebarComponent,
     ReactiveFormsModule,
     CommonModule,
     MatSelectModule,
@@ -34,7 +32,7 @@ import { OrganizationState } from '../../service/organization-state.service';
   templateUrl: './integration-form.component.html',
   styleUrl: './integration-form.component.css',
 })
-export class IntegrationForm {
+export class IntegrationForm implements  DoCheck{
   controlloComparsa: boolean = false;
 
   controlloInvioFormCatalean: boolean = false;
@@ -48,6 +46,13 @@ export class IntegrationForm {
 
   constructor(private router: Router, private integrationData: OrganizationState) {
   }
+  ngDoCheck(): void 
+  {
+    if(this.integrationFormGroup.value.nessuno === true )
+      {
+        this.router.navigate(['/step3']); 
+      }
+  }
 
   takeData(value: boolean) {
     this.controlloInvioFormCatalean = value;
@@ -59,6 +64,5 @@ export class IntegrationForm {
     console.log( this.integrationFormGroup.value.smartCo);
     console.log(this.integrationFormGroup.value.catalean); 
     console.log(this.controlloInvioFormCatalean);
-     
  }
 }

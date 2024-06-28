@@ -12,11 +12,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { ServizioHttpService } from '../../service/servizio-http.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { Jsonvalue } from '../../interface/jsonvalue';
+import { BaseEntity } from '../../interface/jsonvalue';
 import { OrganizationState } from '../../service/organization-state.service';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 import { v4 as uuidv4 } from 'uuid';
 import { Organization } from '../../object-data';
+import { first } from 'rxjs';
+import { environment } from '../../../environment';
 
 @Component({
   selector: 'app-thirdform',
@@ -27,26 +28,23 @@ import { Organization } from '../../object-data';
     MatSelectModule,
     ReactiveFormsModule,
     CommonModule,
-    SidebarComponent,
     RouterLink,
     RouterOutlet,
   ],
-  templateUrl: './thirdform.component.html',
-  styleUrl: './thirdform.component.css',
+  templateUrl: './permissions-form.component.html',
+  styleUrl: './permissions-form.component.css',
 })
-export class ThirdformComponent implements OnInit {
-  arrayPermission: Jsonvalue | any;
-  arrayNamePermission: Array<string> = [];
+
+export class PermissionsForm implements OnInit {
+  arrayPermission: Array<BaseEntity> = []; // prendo i valori con la get 
+  arrayNamePermission: Array<string> = [];// prendo i nomi 
   sceltaCatalean: boolean = false;
   sceltaSmartCo: boolean = false;
-  FormCheckboxPermissions: FormGroup;
-
-  dbname: string = '';
-  name: string = '';
-  prefix: string = '';
-  arrayPermissionValid: Jsonvalue | any = [];
+  formCheckboxPermissions: FormGroup;
   credentialCheck: boolean = false;
   organization: Organization | undefined;
+
+
 
   arrayPermissionsDatelean: Array<string> = [
     'READ_MEDIA_LIBRARY',
@@ -94,29 +92,35 @@ export class ThirdformComponent implements OnInit {
     private integrationData: OrganizationState,
     private router: Router
   ) {
-    this.FormCheckboxPermissions = this.fb.group({});
+    this.formCheckboxPermissions = this.fb.group({});
 
-    this.integrationData.sharedData$.subscribe((data) => {
+    this.integrationData.sharedData$.pipe(first()).subscribe((data) => {
       this.sceltaCatalean = data;
     });
 
-    this.integrationData.sharedDataSmartCo.subscribe((data) => {
+    this.integrationData.sharedDataSmartCo.pipe(first()).subscribe((data) => {
       this.sceltaSmartCo = data;
     });
 
-    this.integrationData.organization$.subscribe((data) => {
+    /*this.integrationData.organization$.pipe(first()).subscribe((data) => {
       this.organization = data;
-    });
+    });*/
+
+    /*integrationData.takeData(); */
+
+   
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+    //console.log(this.organization); 
     this.http
-      .getPermission<Jsonvalue>(
-        'https://user.datalean-nodejs-dev.catalean.com/permission',
+      .getEntities <Array<BaseEntity>>(
+        environment.permissionUrl,
         'e7285b6d-7eda-4e93-be32-e5bc9de0eacf'
       )
       .subscribe({
-        next: (data: Jsonvalue) => {
+        next: (data) => {
           // specifico con Jsonvalue che il valore e di tipo interfaccia jsonvalue
           this.arrayPermission = data;
           for (let index = 0; index < this.arrayPermission.length; index++) {
@@ -133,7 +137,7 @@ export class ThirdformComponent implements OnInit {
     for (let i = 0; i < this.arrayNamePermission.length; i++) {
       for (let y = 0; y < this.arrayPermissionsDatelean.length; y++) {
         if (this.arrayNamePermission[i] == this.arrayPermissionsDatelean[y]) {
-          this.FormCheckboxPermissions.addControl(
+          this.formCheckboxPermissions.addControl(
             this.arrayNamePermission[i],
             this.fb.control(true, Validators.requiredTrue)
           );
@@ -142,7 +146,7 @@ export class ThirdformComponent implements OnInit {
       if (this.sceltaCatalean == true && this.sceltaSmartCo == null) {
         for (let y = 0; y < this.arrayPermissionsCatalean.length; y++) {
           if (this.arrayNamePermission[i] == this.arrayPermissionsCatalean[y]) {
-            this.FormCheckboxPermissions.addControl(
+            this.formCheckboxPermissions.addControl(
               this.arrayNamePermission[i],
               this.fb.control(true, Validators.requiredTrue)
             );
@@ -152,7 +156,7 @@ export class ThirdformComponent implements OnInit {
       } else if (this.sceltaSmartCo == true && this.sceltaCatalean == null) {
         for (let y = 0; y < this.arrayPermissionsSmartco.length; y++) {
           if (this.arrayNamePermission[i] == this.arrayPermissionsSmartco[y]) {
-            this.FormCheckboxPermissions.addControl(
+            this.formCheckboxPermissions.addControl(
               this.arrayNamePermission[i],
               this.fb.control(true, Validators.requiredTrue)
             );
@@ -162,7 +166,7 @@ export class ThirdformComponent implements OnInit {
       } else if (this.sceltaSmartCo == true && this.sceltaCatalean == true) {
         for (let y = 0; y < this.arrayPermissionsBoth.length; y++) {
           if (this.arrayNamePermission[i] == this.arrayPermissionsBoth[y]) {
-            this.FormCheckboxPermissions.addControl(
+            this.formCheckboxPermissions.addControl(
               this.arrayNamePermission[i],
               this.fb.control(true, Validators.requiredTrue)
             );
@@ -176,53 +180,56 @@ export class ThirdformComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    let UUID = this.creazioneUUID();
-    let UUID_roles = this.creazioneUUIDRoles();
+  onSubmit() 
+  {
+    let UUID = this.creationUUID();
+    let UUID_roles = this.creationUUIDRoles();
+    
+    let checkedPermissions = this.takeCheckboxTrue(); // gestire l 'nvio
+    /*let organizationDbname = this.organization?.dbname; 
+    let organizationName = this.organization?.name ; 
+    let organizationPrefix = this.organization?.prefix ; 
 
-    console.log(this.arrayPermission); // sia uuid che altro
-    this.takeCheckboxTrue();
+    let checkedPermissions = this.takeCheckboxTrue();
 
-    if (this.prefix) {
+    if (organizationPrefix) {
       this.http
-        .post(
-          'https://organization.datalean-nodejs-dev.catalean.com/organization',{uuid: UUID,name: this.name.trim(),prefix: this.prefix.trim(),dbName: this.dbname.trim(),}
+        .createEntity(
+          environment.organizationUrl,{uuid: UUID,name: organizationName?.trim(),prefix: organizationPrefix?.trim(),dbName: organizationDbname?.trim(),}
         )
         .subscribe((data) => 
         {
           this.http
-            .post('https://user.datalean-nodejs-dev.catalean.com/role',{name: this.name.trim() + '_add',permissions: this.arrayPermissionValid,uuid: UUID_roles,},UUID).subscribe((data) => {});
+            .createEntity( environment.rolesUrl,{name: organizationName?.trim() + '_add',permissions: checkedPermissions,uuid: UUID_roles,},UUID).subscribe((data) => {});
         });
       this.integrationData.datiUUID(UUID, UUID_roles);
-      this.router.navigate(['/step4']);
     }
-    this.credentialCheck = true;
+    this.credentialCheck = true;*/
+    console.log(checkedPermissions); 
+    this.integrationData.modifyPermissions(checkedPermissions); 
+    this.integrationData.datiUUID(UUID, UUID_roles);
+    this.router.navigate(['/step4']);
   }
 
   checked(i: number) {
-    this.FormCheckboxPermissions.addControl(
+    this.formCheckboxPermissions.addControl(
       this.arrayNamePermission[i],
       this.fb.control(false)
     );
   }
 
-  creazioneUUID(): string {
+  creationUUID(): string {
     return uuidv4();
   }
 
-  creazioneUUIDRoles(): string {
+  creationUUIDRoles(): string {
     return uuidv4();
   }
 
   takeCheckboxTrue() {
-    this.arrayPermissionValid.splice(0, this.arrayPermissionValid.length); // ripulisco l'array
-    for (let i = 0; i < this.arrayPermission.length; i++) {
-      if (
-        this.FormCheckboxPermissions.get(this.arrayPermission[i].name)?.value ==
-        true
-      ) {
-        this.arrayPermissionValid.push(this.arrayPermission[i]);
-      }
-    }
+
+    return this.arrayPermission.filter( permission => 
+      this.formCheckboxPermissions.get(permission.name)?.value == true ); 
+
   }
 }

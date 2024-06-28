@@ -1,0 +1,24 @@
+<h1 class="title">SELEZIONA I PERMESSI</h1>
+<form [formGroup]="formCheckboxPermissions" class="form_style">
+  <span *ngFor="let item of arrayPermission; let i = index">
+    <span>
+      <input type="checkbox" [formControlName]="item.name" />
+      <label class="label_style">{{ item.name }}</label>
+    </span>
+  </span>
+</form>
+<div class="contenitore_bottone">
+  <button
+    type="submit"
+    class="invio"
+    [disabled]="!formCheckboxPermissions.valid"
+    (click)="onSubmit()"
+  >
+    Submit
+  </button>
+  <br />
+  <br />
+  <div *ngIf="credentialCheck == true">
+    NON HAI INSERITO LE CREDENZIALI ALL ' INIZIO
+  </div>
+</div>

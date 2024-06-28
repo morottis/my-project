@@ -1,11 +1,9 @@
-<h1 id="title">Inserisci nome e prefisso organizzazione</h1>
-<!--<div id="form_sidebar">-->
-  <!--<app-sidebar></app-sidebar>-->
+<h1 id="title">Inserisci email e password per il user </h1>
   <div id="contenitore_form">
     <form
       class="form"
-      [formGroup]="form_user"
-      (submit)="Invio_dati()">
+      [formGroup]="userForm"
+      (submit)="onSubmit()">
       <div>
         <mat-form-field  class="form">
           <mat-label>Email</mat-label>
@@ -14,13 +12,13 @@
       </div>
       <div>
         <mat-form-field class="form">
-          <mat-label>password</mat-label>
+          <mat-label>Password</mat-label>
           <input matInput formControlName="password"/>
         </mat-form-field>
       </div>
-      <button type="submit" [disabled]="!form_user.valid">
+      <button type="submit" [disabled]="!userForm.valid">
         INVIA
       </button>
     </form>
   </div>
-<!--</div>-->
+

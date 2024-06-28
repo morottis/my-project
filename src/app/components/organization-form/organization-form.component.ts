@@ -9,7 +9,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
-import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ServizioHttpService } from '../../service/servizio-http.service';
 import { Organization } from '../../object-data';
 import {
@@ -30,7 +29,6 @@ import { environment } from '../../../environment';
     MatSelectModule,
     ReactiveFormsModule,
     CommonModule,
-    SidebarComponent,
     RouterLink,
     RouterOutlet,
   ],
