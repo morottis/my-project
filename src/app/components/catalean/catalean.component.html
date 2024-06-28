@@ -1,70 +1,70 @@
 <h1 class="title">COMPILA PER L' INTEGRAZIONE DI CATALEAN</h1>
-<form [formGroup]="Catalean_form" >
+<form [formGroup]="cataleanForm" >
   <mat-form-field class="input">
     <mat-label>CataleanAccountld</mat-label>
-    <input matInput formControlName="CataleanAccountld" />
+    <input matInput formControlName="cataleanAccountId" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>MapContainerUUlD</mat-label>
-    <input matInput formControlName="MapContainerUUlD" />
+    <input matInput formControlName="mapContainerUUID" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>Name (obbligatorio)</mat-label>
-    <input matInput formControlName="Name" />
+    <input matInput formControlName="name" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>Version (obbligatorio)</mat-label>
-    <input matInput formControlName="Version" />
+    <input matInput formControlName="version" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>LastConsolidationDate</mat-label>
-    <input matInput formControlName="LastConsolidationDate" />
+    <input matInput formControlName="lastConsolidationDate" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>DownloadLinklos</mat-label>
-    <input matInput formControlName="DownloadLinklos" />
+    <input matInput formControlName="downloadLinkIos" />
   </mat-form-field>
 
   <br />
 
   <mat-form-field class="input">
     <mat-label>DownloadLinkAndroid</mat-label>
-    <input matInput formControlName="DownloadLinkAndroid" />
+    <input matInput formControlName="downloadLinkAndroid" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>DownloadLinkElectron</mat-label>
-    <input matInput formControlName="DownloadLinkElectron" />
+    <input matInput formControlName="downloadLinkElectron" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>ResourceBatchLimit</mat-label>
-    <input matInput formControlName="ResourceBatchLimit" />
+    <input matInput formControlName="resourceBatchLimit" />
   </mat-form-field>
 
-  <button type="button"  (click)="aggiungi_text()">
+  <button type="button"  (click)="addTextSearchFields()">
     Crea TextSearchFields 
   </button>
-  <form [formGroup]="formArrayGrouptext">
-    <div formArrayName="formGroupstext">
+  <form [formGroup]="formArrayGroupTextSearchFields">
+    <div formArrayName="textSearchFields">
       <span
-        *ngFor="let group of formGroupstext.controls; let i = index"
+        *ngFor="let group of textSearchFields.controls; let i = index"
         [formGroupName]="i"
       >
         <mat-form-field class="input">
           <mat-label>TextSearchFields </mat-label>
-          <input matInput formControlName="TextSearchFields" />
+          <input matInput formControlName="textSearchFields" />
         </mat-form-field>
       </span>
     </div>
   </form>
   <!---->
-  <input type="checkbox" formControlName="AutoHideVerticalFilter" />
+  <input type="checkbox" formControlName="autoHideVerticalFilter" />
   <label>AutoHideVerticalFilter</label>
   <br />
   <!---->
@@ -76,11 +76,11 @@
       <form>
         <mat-form-field class="input">
           <mat-label>EmptyResultMessage</mat-label>
-          <input matInput formControlName="EmptyResultMessage" />
+          <input matInput formControlName="emptyResultMessage" />
         </mat-form-field>
         <mat-form-field class="input">
           <mat-label>FirstSearchMessage</mat-label>
-          <input matInput formControlName="FirstSearchMessage" />
+          <input matInput formControlName="firstSearchMessage" />
         </mat-form-field>
       </form>
     </div>
@@ -94,11 +94,11 @@
       <form>
         <mat-form-field class="input">
           <mat-label>UrlWebSite</mat-label>
-          <input matInput formControlName="UrlWebSite" />
+          <input matInput formControlName="urlWebSite" />
         </mat-form-field>
         <mat-form-field class="input">
           <mat-label>CompanyLogo</mat-label>
-          <input matInput formControlName="CompanyLogo" />
+          <input matInput formControlName="companyLogo" />
         </mat-form-field>
         <mat-form-field class="input">
           <mat-label>text</mat-label>
@@ -111,35 +111,35 @@
   <div class="div_container">
     <div class="top_part">
       <span> ADDICTIONAL MENU ITEMS </span>
-      <button class="bottone_aggiungi" (click)="aggiungi_FormGroup()">+</button>
+      <button class="bottone_aggiungi" (click)="addMenuItems()">+</button>
     </div>
-    <form [formGroup]="formArrayGroup">
-      <div formArrayName="formGroups" class="center_part">
+    <form [formGroup]="formArrayGroupMenuItems">
+      <div formArrayName="MenuItems" class="center_part">
         <div
-          *ngFor="let group of formGroups.controls; let i = index"
+          *ngFor="let group of MenuItems.controls; let i = index"
           [formGroupName]="i"
           class="form-group"
         >
           <!--formGroups.control è una proprietà del FormArray che contiene l'array di FormGroup o FormControl che fanno parte del FormArray.-->
           <mat-form-field class="input">
             <mat-label>Title</mat-label>
-            <input matInput formControlName="Title"/>
+            <input matInput formControlName="title"/>
           </mat-form-field>
           <mat-form-field class="input">
             <mat-label>Iconcls</mat-label>
-            <input matInput formControlName="Iconcls"/>
+            <input matInput formControlName="iconcls"/>
           </mat-form-field>
           <br />
           <mat-form-field class="input">
             <mat-label>Url</mat-label>
-            <input matInput formControlName="Url"/>
+            <input matInput formControlName="url"/>
           </mat-form-field>
           <br />
-          <button type="button" (click)="rimuoviFormGroup(i)">-</button>
+          <button type="button" (click)="removeMenuItems(i)">-</button>
         </div>
       </div>
     </form>
   </div>
   <br />
-  <button type="submit" [disabled]="!Catalean_form.valid" (click)="invio_Catalean()">INVIA</button>
+  <button type="submit" [disabled]="cataleanForm.invalid" (click)="onSubmit()">INVIA</button>
 </form>

@@ -6,9 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { ServizioHttpService } from '../../service/servizio-http.service';
-import { ObjectData } from '../../object-data';
+import { Organization } from '../../object-data';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
-import { PassagioDatiService } from '../../service/passagio-dati.service';
+import { OrganizationState } from '../../service/organization-state.service';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class FourthformComponent {
   array : Array<string> | any = [] ; 
   UUID : string = '' ; 
   UUIDRoles : string = ''; 
-  constructor( private http  : ServizioHttpService , private service : PassagioDatiService , private route : Router)
+  constructor( private http  : ServizioHttpService , private service : OrganizationState , private route : Router)
   {
 
     this.service.shareDataUUID.subscribe((UUID) => {

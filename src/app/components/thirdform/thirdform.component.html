@@ -2,32 +2,28 @@
 <!--<div id="form_sidebar">
   <app-sidebar></app-sidebar>-->
   <!--<div id="contenitore_form">-->
-    <form [formGroup]="FormCheckbox" class="form_style">
+    <form [formGroup]="FormCheckboxPermissions" class="form_style">
       <span *ngFor="let item of arrayPermission; let i = index">
         <span>
           <input type="checkbox" [formControlName]="item.name" />
           <label class="label_style">{{
             item.name
           }}</label>
-          <span *ngIf="(i + 1) % 5 == 0"><br /></span>
         </span>
       </span>
-      <br />
-      <br />
-      <br />
     </form>
     <div class="contenitore_bottone">
       <button
         type="submit"
         class="invio"
-        [disabled]="!FormCheckbox.valid"
-        (click)="invio()"
+        [disabled]="!FormCheckboxPermissions.valid"
+        (click)="onSubmit()"
       >
         Submit
       </button>
       <br>
       <br>
-      <div *ngIf="verifica == true ">NON HAI INSERITO LE CREDENZIALI ALL ' INIZIO </div>
+      <div *ngIf="credentialCheck == true ">NON HAI INSERITO LE CREDENZIALI ALL ' INIZIO</div>
     </div>
   <!--</div>->
 <!--</div>-->

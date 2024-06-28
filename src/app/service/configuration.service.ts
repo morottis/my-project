@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ServizioHttpService } from './servizio-http.service';
-import { PassagioDatiService } from './passagio-dati.service';
+import { OrganizationState } from './organization-state.service';
 import { of } from 'rxjs';
 
 interface Config {
@@ -16,7 +16,7 @@ interface Config {
 export class ConfigurationService {
   constructor(
     private http: ServizioHttpService,
-    private passagioDatiService: PassagioDatiService
+    private passagioDatiService: OrganizationState
   ) {}
 
   createConfig(config: Config  ) {

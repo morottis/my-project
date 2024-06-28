@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ServizioHttpService } from '../../service/servizio-http.service';
-import { PassagioDatiService } from '../../service/passagio-dati.service';
+import { OrganizationState } from '../../service/organization-state.service';
 import { CommonModule } from '@angular/common';
 import {MatRadioModule} from '@angular/material/radio';
 import { ConfigurationService } from '../../service/configuration.service';
@@ -33,10 +33,10 @@ export class FifthformComponent {
   array_controllo : Array<string> = ['it_IT' , 'en_US' , 'es_ES' , 'de_DE' , 'fr_FR'];
   array_value_true : Array<string> = []; 
   contollo : boolean = false ; 
-  UUID : any; 
+  UUID : string =''; 
   cambioPagina : boolean ; 
 
-  constructor(private http : ServizioHttpService , private organizationUUID : PassagioDatiService , private config : ConfigurationService , private route : Router){
+  constructor(private http : ServizioHttpService , private organizationUUID : OrganizationState , private config : ConfigurationService , private route : Router){
 
     organizationUUID.UUIDSubject.subscribe( UUID => { this.UUID = UUID , console.log(UUID)}); 
     this.cambioPagina = false; 
@@ -57,6 +57,7 @@ export class FifthformComponent {
         {
           this.contollo = true ; 
         }
+        this.route.navigate(['/']); 
       }})
     
   }

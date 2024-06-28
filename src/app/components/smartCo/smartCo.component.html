@@ -1,81 +1,81 @@
 <h1 class="title">COMPILA PER L' INTEGRAZIONE DI SMARTCO</h1>
-<form [formGroup]="SmartCo_form">
+<form [formGroup]="smartcoForm">
   <mat-form-field class="input">
     <mat-label>DownloandLinkIos</mat-label>
-    <input matInput formControlName="DownloandLinkIos" />
+    <input matInput formControlName="downloandLinkIos" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>DownloandLinkAndroid</mat-label>
-    <input matInput formControlName="DownloadLinkAndroid" />
+    <input matInput formControlName="downloadLinkAndroid" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>Name (obbligatorio)</mat-label>
-    <input matInput formControlName="Name" />
+    <input matInput formControlName="name" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>Version (obbligatorio)</mat-label>
-    <input matInput formControlName="Version" />
+    <input matInput formControlName="version" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>CommunicationFeatureUUlD</mat-label>
-    <input matInput formControlName="CommunicationFeatureUUlD" />
+    <input matInput formControlName="communicationFeatureUUID" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>HighlightsUUID</mat-label>
-    <input matInput formControlName="HighlightsUUID" />
+    <input matInput formControlName="highlightsUUID" />
   </mat-form-field>
 
   <br />
 
   <mat-form-field class="input">
     <mat-label>FirstPageUUID</mat-label>
-    <input matInput formControlName="FirstPageUUID" />
+    <input matInput formControlName="firstPageUUID" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>StickyUUID</mat-label>
-    <input matInput formControlName="StickyUUID" />
+    <input matInput formControlName="stickyUUID" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>PinToTopCap</mat-label>
-    <input matInput formControlName="PinToTopCap" />
+    <input matInput formControlName="pinToTopCap" />
   </mat-form-field>
 
   <mat-form-field class="input">
     <mat-label>HighlightLimit</mat-label>
-    <input matInput formControlName="HighlightLimit" />
+    <input matInput formControlName="highlightLimit" />
   </mat-form-field>
   <br />
   <div class="div_container">
     <div class="top_part">
       <span> ADDICTIONAL MENU ITEMS </span>
-      <button class="bottone_aggiungi" (click)="aggiungi_FormGroup()">+</button>
+      <button type="button" class="bottone_aggiungi" (click)="addFormGroup()">+</button>
     </div>
 
-    <form [formGroup]="formArrayGroup">
-      <div formArrayName="formGroups" class="center_part">
+    <form [formGroup]="formArrayGroupMenuItems">
+      <div formArrayName="MenuItems" class="center_part">
         <div
-          *ngFor="let group of formGroups.controls; let i = index"
+          *ngFor="let group of MenuItems.controls; let i = index"
           [formGroupName]="i"
           class="form-group"
         >
           <!--formGroups.control è una proprietà del FormArray che contiene l'array di FormGroup o FormControl che fanno parte del FormArray.-->
           <mat-form-field class="input">
             <mat-label>PinToTopCap</mat-label>
-            <input matInput formControlName="PinToTopCap" />
+            <input matInput formControlName="pinToTopCap" />
           </mat-form-field>
           <mat-form-field class="input">
             <mat-label>HighlightLimit</mat-label>
-            <input matInput formControlName="HighlightLimit" />
+            <input matInput formControlName="highlightLimit" />
           </mat-form-field>
           <br />
-          <button type="button" (click)="rimuoviFormGroup(i)">-</button>
+          <button type="button" (click)="removeFormGroup(i)">-</button>
         </div>
       </div>
     </form>
@@ -83,8 +83,8 @@
   <br />
   <button
     type="submit"
-    [disabled]="!SmartCo_form.valid"
-    (click)="invio_SmartCo()"
+    [disabled]="smartcoForm.invalid"
+    (click)="onSubmit()"
   >
     INVIA
   </button>

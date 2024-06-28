@@ -3,18 +3,18 @@
  <!--<app-sidebar></app-sidebar>-->
   <!--<div id="contenitore_form">--->
     <form class="form"
-      [formGroup]="formNomeOrganizazzione"
-      (submit)="Invio_dati()">
+      [formGroup]="formOrganization"
+      (submit)="onSubmit()">
       <div>
         <mat-form-field >
           <mat-label>Nome</mat-label>
-          <input matInput formControlName="nome" />
+          <input matInput formControlName="name" />
         </mat-form-field>
       </div>
       <div>
         <mat-form-field >
           <mat-label>Prefisso Organizzazione</mat-label>
-          <input matInput formControlName="organizazzione"/>
+          <input matInput formControlName="prefix"/>
         </mat-form-field>
       </div>
       <div>
@@ -24,11 +24,11 @@
         </mat-form-field>
       </div>
       <div class="bottone">
-        <button type="submit"  [disabled]="!formNomeOrganizazzione.valid">
+        <button type="submit"  [disabled]="formOrganization.invalid">
           INVIA
         </button>
       </div>
-      <p *ngIf="verifica == false">{{scrittaErrore}}</p>
+      <p *ngIf="scrittaErrore">{{scrittaErrore}}</p>
     </form>
   </div>
 <!--</div>-->

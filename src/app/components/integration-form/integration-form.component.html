@@ -1,0 +1,33 @@
+<h1 class="title">SCEGLI LA TUA INTEGRAZIONE</h1>
+<!--<div class="form_sidebar">-->
+ <!-- <app-sidebar></app-sidebar> --> 
+  <div class="solo_form">
+    <form class="check_form" [formGroup]="integrationFormGroup" (submit)="onsubmit()">
+      <input type="checkbox" formControlName="smartCo" />
+      <label>SmartCo</label>
+      <br />
+      <input type="checkbox" formControlName="catalean" />
+      <label>Catalean</label>
+      <br />
+      <input type="checkbox" formControlName="nessuno" />
+      <label>nessuno</label>
+      <br />
+    </form>
+  </div>
+<!--</div>-->
+
+
+<div *ngIf="this.integrationFormGroup.value.catalean == true  && this.integrationFormGroup.value.smartCo == false" class="integration_form"><app-catalean [isSmartcoLast]="false"></app-catalean></div>
+
+<div class="integration_form" *ngIf="this.integrationFormGroup.value.smartCo == true && this.integrationFormGroup.value.catalean == false  "><app-smart-co></app-smart-co></div>
+
+<div
+  *ngIf="
+    this.integrationFormGroup.value.smartCo == true &&
+    this.integrationFormGroup.value.catalean == true
+  "
+  class="integration_form"
+>
+  <app-catalean (submitClick)="takeData($event)" [isSmartcoLast]="true"></app-catalean>
+  <app-smart-co *ngIf="controlloInvioFormCatalean === true"></app-smart-co>
+</div>

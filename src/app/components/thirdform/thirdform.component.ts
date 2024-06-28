@@ -13,9 +13,10 @@ import { CommonModule } from '@angular/common';
 import { ServizioHttpService } from '../../service/servizio-http.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { Jsonvalue } from '../../interface/jsonvalue';
-import { PassagioDatiService } from '../../service/passagio-dati.service';
+import { OrganizationState } from '../../service/organization-state.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { v4 as uuidv4 } from 'uuid';
+import { Organization } from '../../object-data';
 
 @Component({
   selector: 'app-thirdform',
@@ -36,17 +37,18 @@ import { v4 as uuidv4 } from 'uuid';
 export class ThirdformComponent implements OnInit {
   arrayPermission: Jsonvalue | any;
   arrayNamePermission: Array<string> = [];
-  string: string = '';
   sceltaCatalean: boolean = false;
   sceltaSmartCo: boolean = false;
-  FormCheckbox: FormGroup;
+  FormCheckboxPermissions: FormGroup;
+
   dbname: string = '';
   name: string = '';
   prefix: string = '';
   arrayPermissionValid: Jsonvalue | any = [];
-  verifica : boolean = false ; 
+  credentialCheck: boolean = false;
+  organization: Organization | undefined;
 
-  arrayPermessiDatelean: Array<string> = [
+  arrayPermissionsDatelean: Array<string> = [
     'READ_MEDIA_LIBRARY',
     'READ_FEATURES',
     'READ_STRUCTURE',
@@ -60,14 +62,14 @@ export class ThirdformComponent implements OnInit {
     'CREATE_CONFIGURATION',
     'READ_DASHBOARD',
   ];
-  arrayPermessiCatalean: Array<string> = [
+  arrayPermissionsCatalean: Array<string> = [
     'EDIT_APPLICATION_USERS',
     'READ_PRODUCTS',
     'ADD_APPLICATION_USERS',
     'READ_INTEGRATIONS',
     'EDIT_INTEGRATIONS',
   ];
-  arrayPermessiSmartco: Array<string> = [
+  arrayPermissionsSmartco: Array<string> = [
     'ADD_APPLICATION_USERS',
     'READ_INTEGRATIONS',
     'EDIT_INTEGRATIONS',
@@ -75,7 +77,7 @@ export class ThirdformComponent implements OnInit {
     'READ_COMMUNICATIONS',
     'READ_APPLICATION_GROUPS',
   ];
-  arrayEntrambi: Array<string> = [
+  arrayPermissionsBoth: Array<string> = [
     'ADD_APPLICATION_USERS',
     'READ_INTEGRATIONS',
     'EDIT_INTEGRATIONS',
@@ -89,33 +91,21 @@ export class ThirdformComponent implements OnInit {
   constructor(
     private http: ServizioHttpService,
     private fb: FormBuilder,
-    private passaggioData: PassagioDatiService,
+    private integrationData: OrganizationState,
     private router: Router
   ) {
-    this.FormCheckbox = this.fb.group({});
+    this.FormCheckboxPermissions = this.fb.group({});
 
-    this.passaggioData.sharedData$.subscribe((data) => {
+    this.integrationData.sharedData$.subscribe((data) => {
       this.sceltaCatalean = data;
     });
-    console.log(this.sceltaCatalean);
-    this.passaggioData.sharedDataSmartCo.subscribe((data) => {
+
+    this.integrationData.sharedDataSmartCo.subscribe((data) => {
       this.sceltaSmartCo = data;
     });
-    console.log('smartCO : ' + this.sceltaSmartCo);
 
-    this.passaggioData.sharedDataNome.subscribe((data) => {
-      console.log(data);
-      this.name = data;
-    });
-
-    this.passaggioData.sharedDataPrefix.subscribe((data) => {
-      console.log(data);
-      this.prefix = data;
-    });
-
-    this.passaggioData.sharedDataDbname.subscribe((data) => {
-      console.log(data);
-      this.dbname = data;
+    this.integrationData.organization$.subscribe((data) => {
+      this.organization = data;
     });
   }
 
@@ -128,12 +118,10 @@ export class ThirdformComponent implements OnInit {
       .subscribe({
         next: (data: Jsonvalue) => {
           // specifico con Jsonvalue che il valore e di tipo interfaccia jsonvalue
-          console.log(data);
           this.arrayPermission = data;
           for (let index = 0; index < this.arrayPermission.length; index++) {
             this.arrayNamePermission[index] = this.arrayPermission[index].name;
           }
-          console.log(this.arrayNamePermission);
           this.addControls();
         },
       });
@@ -143,20 +131,18 @@ export class ThirdformComponent implements OnInit {
     console.log(this.arrayNamePermission.length);
 
     for (let i = 0; i < this.arrayNamePermission.length; i++) {
-      for (let y = 0; y < this.arrayPermessiDatelean.length; y++) {
-        if (this.arrayNamePermission[i] == this.arrayPermessiDatelean[y]) {
-          console.log('nel if');
-          this.FormCheckbox.addControl(
+      for (let y = 0; y < this.arrayPermissionsDatelean.length; y++) {
+        if (this.arrayNamePermission[i] == this.arrayPermissionsDatelean[y]) {
+          this.FormCheckboxPermissions.addControl(
             this.arrayNamePermission[i],
             this.fb.control(true, Validators.requiredTrue)
           );
         }
       }
       if (this.sceltaCatalean == true && this.sceltaSmartCo == null) {
-        for (let y = 0; y < this.arrayPermessiCatalean.length; y++) {
-          if (this.arrayNamePermission[i] == this.arrayPermessiCatalean[y]) {
-            console.log('nel if catalean ');
-            this.FormCheckbox.addControl(
+        for (let y = 0; y < this.arrayPermissionsCatalean.length; y++) {
+          if (this.arrayNamePermission[i] == this.arrayPermissionsCatalean[y]) {
+            this.FormCheckboxPermissions.addControl(
               this.arrayNamePermission[i],
               this.fb.control(true, Validators.requiredTrue)
             );
@@ -164,10 +150,9 @@ export class ThirdformComponent implements OnInit {
         }
         this.checked(i);
       } else if (this.sceltaSmartCo == true && this.sceltaCatalean == null) {
-        for (let y = 0; y < this.arrayPermessiSmartco.length; y++) {
-          if (this.arrayNamePermission[i] == this.arrayPermessiSmartco[y]) {
-            console.log('nel if smartco ');
-            this.FormCheckbox.addControl(
+        for (let y = 0; y < this.arrayPermissionsSmartco.length; y++) {
+          if (this.arrayNamePermission[i] == this.arrayPermissionsSmartco[y]) {
+            this.FormCheckboxPermissions.addControl(
               this.arrayNamePermission[i],
               this.fb.control(true, Validators.requiredTrue)
             );
@@ -175,10 +160,9 @@ export class ThirdformComponent implements OnInit {
         }
         this.checked(i);
       } else if (this.sceltaSmartCo == true && this.sceltaCatalean == true) {
-        for (let y = 0; y < this.arrayEntrambi.length; y++) {
-          if (this.arrayNamePermission[i] == this.arrayEntrambi[y]) {
-            console.log('nel if entrambi');
-            this.FormCheckbox.addControl(
+        for (let y = 0; y < this.arrayPermissionsBoth.length; y++) {
+          if (this.arrayNamePermission[i] == this.arrayPermissionsBoth[y]) {
+            this.FormCheckboxPermissions.addControl(
               this.arrayNamePermission[i],
               this.fb.control(true, Validators.requiredTrue)
             );
@@ -192,52 +176,31 @@ export class ThirdformComponent implements OnInit {
     }
   }
 
-  invio() {
+  onSubmit() {
     let UUID = this.creazioneUUID();
-    console.log(UUID);
     let UUID_roles = this.creazioneUUIDRoles();
-    console.log('roles uuid : ' + UUID_roles);
 
     console.log(this.arrayPermission); // sia uuid che altro
-    this.verificaTrue();
+    this.takeCheckboxTrue();
 
     if (this.prefix) {
-      console.log(this.FormCheckbox.value); // fallo poi con lo switch map
       this.http
         .post(
-          'https://organization.datalean-nodejs-dev.catalean.com/organization',
-          {
-            uuid: UUID,
-            name: this.name.trimEnd().trimStart(),
-            prefix: this.prefix.trimEnd().trimStart(),
-            dbName: this.dbname.trimEnd().trimStart(),
-          }
+          'https://organization.datalean-nodejs-dev.catalean.com/organization',{uuid: UUID,name: this.name.trim(),prefix: this.prefix.trim(),dbName: this.dbname.trim(),}
         )
-        .subscribe((data) => {
-          console.log(data);
+        .subscribe((data) => 
+        {
           this.http
-            .post(
-              'https://user.datalean-nodejs-dev.catalean.com/role',
-              {
-                name: this.name.trimEnd().trimStart() + '_add',
-                permissions: this.arrayPermissionValid,
-                uuid: UUID_roles,
-              },
-              UUID
-            )
-            .subscribe((data) => {
-              console.log(data);
-            });
+            .post('https://user.datalean-nodejs-dev.catalean.com/role',{name: this.name.trim() + '_add',permissions: this.arrayPermissionValid,uuid: UUID_roles,},UUID).subscribe((data) => {});
         });
-      this.passaggioData.datiUUID(UUID, UUID_roles);
+      this.integrationData.datiUUID(UUID, UUID_roles);
       this.router.navigate(['/step4']);
     }
-    this.verifica = true ; 
-    
+    this.credentialCheck = true;
   }
 
   checked(i: number) {
-    this.FormCheckbox.addControl(
+    this.FormCheckboxPermissions.addControl(
       this.arrayNamePermission[i],
       this.fb.control(false)
     );
@@ -251,12 +214,14 @@ export class ThirdformComponent implements OnInit {
     return uuidv4();
   }
 
-  verificaTrue() {
+  takeCheckboxTrue() {
     this.arrayPermissionValid.splice(0, this.arrayPermissionValid.length); // ripulisco l'array
     for (let i = 0; i < this.arrayPermission.length; i++) {
-      if (this.FormCheckbox.get(this.arrayPermission[i].name)?.value == true) {
+      if (
+        this.FormCheckboxPermissions.get(this.arrayPermission[i].name)?.value ==
+        true
+      ) {
         this.arrayPermissionValid.push(this.arrayPermission[i]);
-        console.log(this.arrayPermissionValid);
       }
     }
   }
