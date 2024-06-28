@@ -46,7 +46,7 @@ export class OrganizationForm {
   constructor(
     private http: ServizioHttpService,
     private router: Router,
-    private passagio_dati: OrganizationState
+    private submitData: OrganizationState
   ) {}
 
   formOrganization = new FormGroup({
@@ -81,7 +81,7 @@ export class OrganizationForm {
             return false ; 
           })
             if (!organizationAlreadyPresent) {// se non epresente nella lista invio i dati all observer 
-              this.passagio_dati.setOrganization(
+              this.submitData.setOrganization(
               {  
                 name : this.formOrganization.getRawValue().name,// prende tutti i valori anche se sono disable 
                 dbname :  this.formOrganization.getRawValue().dbname,

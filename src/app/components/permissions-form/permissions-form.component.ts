@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  FormArray,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
@@ -12,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { ServizioHttpService } from '../../service/servizio-http.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { BaseEntity } from '../../interface/jsonvalue';
+import { BaseEntity } from '../../interface/base-entity';
 import { OrganizationState } from '../../service/organization-state.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Organization } from '../../object-data';
@@ -34,17 +33,14 @@ import { environment } from '../../../environment';
   templateUrl: './permissions-form.component.html',
   styleUrl: './permissions-form.component.css',
 })
-
 export class PermissionsForm implements OnInit {
-  arrayPermission: Array<BaseEntity> = []; // prendo i valori con la get 
-  arrayNamePermission: Array<string> = [];// prendo i nomi 
+  arrayPermission: Array<BaseEntity> = []; // prendo i valori con la get
+  arrayNamePermission: Array<string> = []; // prendo i nomi
   sceltaCatalean: boolean = false;
   sceltaSmartCo: boolean = false;
   formCheckboxPermissions: FormGroup;
   credentialCheck: boolean = false;
   organization: Organization | undefined;
-
-
 
   arrayPermissionsDatelean: Array<string> = [
     'READ_MEDIA_LIBRARY',
@@ -89,33 +85,24 @@ export class PermissionsForm implements OnInit {
   constructor(
     private http: ServizioHttpService,
     private fb: FormBuilder,
-    private integrationData: OrganizationState,
+    private submitData: OrganizationState,
     private router: Router
   ) {
     this.formCheckboxPermissions = this.fb.group({});
 
-    this.integrationData.sharedData$.pipe(first()).subscribe((data) => {
+    this.submitData.sharedData$.pipe(first()).subscribe((data) => {
       this.sceltaCatalean = data;
     });
 
-    this.integrationData.sharedDataSmartCo.pipe(first()).subscribe((data) => {
+    this.submitData.sharedDataSmartCo.pipe(first()).subscribe((data) => {
       this.sceltaSmartCo = data;
     });
-
-    /*this.integrationData.organization$.pipe(first()).subscribe((data) => {
-      this.organization = data;
-    });*/
-
-    /*integrationData.takeData(); */
-
-   
   }
 
-  ngOnInit(): void 
-  {
-    //console.log(this.organization); 
+  ngOnInit(): void {
+    //console.log(this.organization);
     this.http
-      .getEntities <Array<BaseEntity>>(
+      .getEntities<Array<BaseEntity>>(
         environment.permissionUrl,
         'e7285b6d-7eda-4e93-be32-e5bc9de0eacf'
       )
@@ -180,34 +167,14 @@ export class PermissionsForm implements OnInit {
     }
   }
 
-  onSubmit() 
-  {
+  onSubmit() {
     let UUID = this.creationUUID();
     let UUID_roles = this.creationUUIDRoles();
-    
+
     let checkedPermissions = this.takeCheckboxTrue(); // gestire l 'nvio
-    /*let organizationDbname = this.organization?.dbname; 
-    let organizationName = this.organization?.name ; 
-    let organizationPrefix = this.organization?.prefix ; 
-
-    let checkedPermissions = this.takeCheckboxTrue();
-
-    if (organizationPrefix) {
-      this.http
-        .createEntity(
-          environment.organizationUrl,{uuid: UUID,name: organizationName?.trim(),prefix: organizationPrefix?.trim(),dbName: organizationDbname?.trim(),}
-        )
-        .subscribe((data) => 
-        {
-          this.http
-            .createEntity( environment.rolesUrl,{name: organizationName?.trim() + '_add',permissions: checkedPermissions,uuid: UUID_roles,},UUID).subscribe((data) => {});
-        });
-      this.integrationData.datiUUID(UUID, UUID_roles);
-    }
-    this.credentialCheck = true;*/
-    console.log(checkedPermissions); 
-    this.integrationData.modifyPermissions(checkedPermissions); 
-    this.integrationData.datiUUID(UUID, UUID_roles);
+    console.log(checkedPermissions);
+    this.submitData.modifyPermissions(checkedPermissions);
+    this.submitData.datiUUID(UUID, UUID_roles);
     this.router.navigate(['/step4']);
   }
 
@@ -227,9 +194,9 @@ export class PermissionsForm implements OnInit {
   }
 
   takeCheckboxTrue() {
-
-    return this.arrayPermission.filter( permission => 
-      this.formCheckboxPermissions.get(permission.name)?.value == true ); 
-
+    return this.arrayPermission.filter(
+      (permission) =>
+        this.formCheckboxPermissions.get(permission.name)?.value == true
+    );
   }
 }

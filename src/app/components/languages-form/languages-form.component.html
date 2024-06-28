@@ -1,11 +1,11 @@
-<span *ngIf="cambioPagina === false">
+<span *ngIf="changePage === false">
   <h1 class="title">
     SELEZIONA LE LINGUE ALL 'INVIO TI VERRA CHIESTA LA LINGUA DI DEFAULT
   </h1>
   <form
     class="checkbox-container"
-    [formGroup]="gruppo_checkbox_lingue"
-    (submit)="invio()"
+    [formGroup]="gruppoChecboxlingue"
+    (submit)="onSubmitPage()"
   >
     <div class="checkbox-group">
       <input type="checkbox" formControlName="it_IT" />
@@ -32,15 +32,15 @@
       <label>Francese</label>
     </div>
     <br />
-    <button type="submit" [disabled]="!gruppo_checkbox_lingue.valid">
+    <button type="submit" [disabled]="!gruppoChecboxlingue.valid">
       INVIA
     </button>
   </form>
 </span>
-<span *ngIf="cambioPagina === true">
+<span *ngIf="changePage === true">
   <h1 class="title">SELEZIONA LA LINGUA DI DEFAULT</h1>
 
-  <form [formGroup]="gruppoLingueDefault" class="checkbox-container" (submit)="invioDefault()">
+  <form [formGroup]="gruppoLingueDefault" class="checkbox-container" (submit)="onTotalSubmit()">
     <mat-radio-group formControlName="default">
       <mat-radio-button value="it_IT">Italiano</mat-radio-button>
       <br>
@@ -56,6 +56,5 @@
     <button type="submit" [disabled]="!gruppoLingueDefault.valid">INVIA</button>
   </form>
   <br>
-  <div *ngIf="contollo == true " id="scritta">UUID non inserito in precedenza</div>
 </span>
 

@@ -9,10 +9,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
-import { ServizioHttpService } from '../../service/servizio-http.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { OrganizationState } from '../../service/organization-state.service';
-import { environment } from '../../../environment';
 import { first } from 'rxjs';
 
 @Component({
@@ -34,16 +32,15 @@ export class UserFormComponent {
   organizationUUID: string = '';
   roleUUID: string = '';
   constructor(
-    private http: ServizioHttpService,
-    private takeData: OrganizationState,
+    private submitData: OrganizationState,
     private route: Router
   ) {
-    this.takeData.shareDataUUID.pipe(first()).subscribe((UUID) => {
+    this.submitData.shareDataUUID.pipe(first()).subscribe((UUID) => {
       this.organizationUUID = UUID;
     });
   
 
-    this.takeData.shareDataUUIDRoles.pipe(first()).subscribe((UUID_roles) => {
+    this.submitData.shareDataUUIDRoles.pipe(first()).subscribe((UUID_roles) => {
       this.roleUUID = UUID_roles;
     });
     
@@ -52,31 +49,17 @@ export class UserFormComponent {
   userForm = new FormGroup({
     // form group
     mail: new FormControl('', {
-      validators: [Validators.required, Validators.email],
+    validators: [Validators.required, Validators.email],
     }), // username == mail // firts e second == prima parte mail
     password: new FormControl('', { validators: [Validators.required] }),
   });
 
   onSubmit() {
     let splittedEmail = this.userForm.value.mail?.split('@');
-    /*
-    if (splittedEmail) {
-      let dati = {
-        email: this.userForm.value.mail?.trim(),
-        password: this.userForm.value.password?.trim(),
-        firstName: splittedEmail[0]?.trim(),
-        lastName: splittedEmail[1]?.trim(),
-        username: this.userForm.value.mail?.trim(),
-        roles: [{ uuid: this.roleUUID }],
-      };
-      console.log(dati);
-      this.http
-        .createEntity(environment.usersUrl, dati, this.organizationUUID)
-        .subscribe((data) => {
-          console.warn(data);
-        }); // array d ' oggetti
-      this.route.navigate(['/step5']);
-    }*/
+    if( splittedEmail &&  this.userForm.value.mail && this.userForm.value.password )
+      {
+        this.submitData.modifyUserInformation(splittedEmail[0] , splittedEmail[1] ,this.userForm.value.mail ,this.userForm.value.password  ); 
+      }
     this.route.navigate(['/step5']);
   }
 }

@@ -32,11 +32,10 @@ import { OrganizationState } from '../../service/organization-state.service';
   templateUrl: './integration-form.component.html',
   styleUrl: './integration-form.component.css',
 })
-export class IntegrationForm implements  DoCheck{
+export class IntegrationForm implements DoCheck {
   controlloComparsa: boolean = false;
 
   controlloInvioFormCatalean: boolean = false;
-  
 
   integrationFormGroup = new FormGroup({
     smartCo: new FormControl(false, {}),
@@ -44,25 +43,21 @@ export class IntegrationForm implements  DoCheck{
     nessuno: new FormControl(false, {}),
   });
 
-  constructor(private router: Router, private integrationData: OrganizationState) {
-  }
-  ngDoCheck(): void 
-  {
-    if(this.integrationFormGroup.value.nessuno === true )
-      {
-        this.router.navigate(['/step3']); 
-      }
+  constructor(private router: Router) {}
+  ngDoCheck(): void {
+    if (this.integrationFormGroup.value.nessuno === true) {
+      this.router.navigate(['/step3']);
+    }
   }
 
   takeData(value: boolean) {
     this.controlloInvioFormCatalean = value;
   }
 
-
   onsubmit() {
-    this.controlloComparsa=true ; 
-    console.log( this.integrationFormGroup.value.smartCo);
-    console.log(this.integrationFormGroup.value.catalean); 
+    this.controlloComparsa = true;
+    console.log(this.integrationFormGroup.value.smartCo);
+    console.log(this.integrationFormGroup.value.catalean);
     console.log(this.controlloInvioFormCatalean);
- }
+  }
 }
